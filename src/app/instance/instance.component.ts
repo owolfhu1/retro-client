@@ -35,6 +35,45 @@ export class InstanceComponent implements OnInit {
     }
   }
 
+  trash(event: CdkDragDrop<Statement[]>) {
+    if (event.isPointerOverContainer) {
+      const lastIndex = event.previousIndex;
+      const nextIndex = event.currentIndex;
+      const lastList = event.previousContainer.id;
+      const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
+      this.socketService.instance.trash.splice(nextIndex, 0, item);
+      this.socketService.emit('trash', { lastIndex, nextIndex, lastList });
+    }
+  }
+
+  trashClass(junk) {
+    return {
+      'trash-object': true,
+      good: junk.from === 'goods',
+      bad: junk.from === 'bads',
+      action: junk.from === 'actions'
+    };
+  }
+
+  delete(index) {
+    const item = this.socketService.instance.trash[index];
+    if (this.socketService.instance.owner === this.socketService.name) {
+      this.socketService.emit('delete', index);
+    } else {
+      if (item.author !== this.socketService.name) {
+        alert('You may only delete your own statements.');
+      } else if (item.comments.length > 0) {
+        alert('Only the instance owner can delete statements with comments.');
+      } else {
+        this.socketService.emit('delete', index);
+      }
+    }
+  }
+
+  deleteAll() {
+    this.socketService.emit('delete-all', null);
+  }
+
   join() {
     this.socketService.emit('join', { instanceId: this.title, name: this.nameInput });
   }
@@ -46,6 +85,11 @@ export class InstanceComponent implements OnInit {
           this.socketService.emit('new-' + type, value);
         }
     });
+  }
+
+  displayJunk (junk) {
+    const length = junk.text.legnth;
+    return junk.text.substring(0, length < 17 ? length - 1 : 16);
   }
 }
 
@@ -87,6 +131,7 @@ export interface Instance {
   goods: Statement[];
   bads: Statement[];
   actions: Statement[];
+  trash: Statement[];
 }
 
 export interface Statement {
@@ -96,6 +141,7 @@ export interface Statement {
   text: string;
   id: string;
   author: string;
+  from?: string;
 }
 
 export interface Comment {

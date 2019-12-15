@@ -65,4 +65,38 @@
       <mat-icon>create</mat-icon>
     </button>
   </mat-card>
+
+
+  <mat-card class="trash" cdkDrag>
+    <div
+      class="trash-body"
+      cdkDropList
+      id="trash"
+      [cdkDropListData]="socketService.instance.trash"
+      (cdkDropListDropped)="trash($event)">
+      <div
+        [ngClass]="trashClass(junk)"
+        *ngFor="let junk of socketService.instance.trash; let i = index"
+        cdkDrag>
+        <span
+          style="color: red"
+          (click)="delete(i)"
+          matTooltip="delete">
+          (X)
+        </span>
+        {{ displayJunk(junk) }} ...
+      </div>
+    </div>
+
+    <mat-icon
+      *ngIf="socketService.instance.owner === socketService.name"
+      matTooltip="delete all"
+      class="left-corner-button"
+      color="warn"
+      (click)="deleteAll()">
+      delete
+    </mat-icon>
+    <mat-icon class="trash-handle" cdkDragHandle>open_with</mat-icon>
+  </mat-card>
+
 </div>

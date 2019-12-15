@@ -12,11 +12,49 @@
   position: relative;
 }
 
+.trash {
+  width: 100px;
+  height: 150px;
+  z-index: 100;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
+
+.trash-handle {
+  position: absolute;
+  top: 3px;
+  right:3px;
+}
+
+.trash-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.trash-object {
+  height: 10px;
+  font-size: xx-small;
+  margin: 3px;
+  border-radius: 3px;
+  padding-left: 3px;
+}
+
 .corner-button {
   position: absolute;
   top: 5px;
   right: 5px;
   font-size: larger;
+}
+
+.left-corner-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 50;
+  color: red;
 }
 
 mat-card {
