@@ -1,0 +1,68 @@
+<mat-card *ngIf="!socketService.name">
+
+  <mat-form-field>
+    <input matInput placeholder="name" [(ngModel)]="nameInput">
+  </mat-form-field>
+
+  <button mat-raised-button color="accent" (click)="join()">join</button>
+
+</mat-card>
+
+<div *ngIf="socketService.instance && socketService.name" class="board" cdkDropListGroup>
+  <mat-card class="section" cdkDropList id="goods"
+            [cdkDropListData]="socketService.instance.goods"
+            (cdkDropListDropped)="drop($event)">
+    <h1 class="center">Went Well</h1>
+
+    <mat-card class="good" *ngFor="let statement of socketService.instance.goods" cdkDrag>
+      <app-statement [statement]="statement"></app-statement>
+    </mat-card>
+
+    <button
+      matTooltip="write statement"
+      mat-fab
+      class="corner-button"
+      color="accent"
+      (click)="write('goods')">
+      <mat-icon>create</mat-icon>
+    </button>
+  </mat-card>
+
+  <mat-card class="section" cdkDropList id="bads"
+            [cdkDropListData]="socketService.instance.bads"
+            (cdkDropListDropped)="drop($event)">
+    <h1 class="center">Not Well</h1>
+
+    <mat-card class="bad" *ngFor="let statement of socketService.instance.bads" cdkDrag>
+      <app-statement [statement]="statement"></app-statement>
+    </mat-card>
+
+    <button
+      matTooltip="write statement"
+      mat-fab
+      class="corner-button"
+      color="accent"
+      (click)="write('bads')">
+      <mat-icon>create</mat-icon>
+    </button>
+  </mat-card>
+
+  <mat-card class="section" cdkDropList id="actions"
+            [cdkDropListData]="socketService.instance.actions"
+            (cdkDropListDropped)="drop($event)">
+    <h1 class="center">Action Items</h1>
+
+    <mat-card class="action" *ngFor="let statement of socketService.instance.actions" cdkDrag>
+      <app-statement [statement]="statement"></app-statement>
+    </mat-card>
+
+    <button
+      matTooltip="write statement"
+      mat-fab
+      class="corner-button"
+      color="accent"
+      (click)="write('actions')">
+      <mat-icon>create</mat-icon>
+    </button>
+  </mat-card>
+</div>

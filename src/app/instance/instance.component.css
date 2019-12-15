@@ -1,0 +1,52 @@
+
+.board {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+
+.section {
+  width: 30%;
+  margin: 10px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.corner-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: larger;
+}
+
+mat-card {
+  margin-top: 8px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+#goods {
+  background: lightgreen;
+}
+
+#bads {
+  background: lightcoral;
+}
+
+#actions {
+  background: orange;
+}
+
+.action {
+  background: orangered;
+}
+
+.good {
+  background: green;
+}
+
+.bad {
+  background: darkred;
+}

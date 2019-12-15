@@ -1,0 +1,12 @@
+
+.corner-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+mat-card {
+  margin-top: 6px;
+}
+
+.line-breaks { white-space: pre-wrap }

@@ -1,0 +1,17 @@
+<h3>Start a New Instance</h3>
+
+<mat-form-field>
+  <input matInput placeholder="instance title" [(ngModel)]="title">
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput placeholder="instance owner" [(ngModel)]="owner">
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput type="number" placeholder="likes allowed" [(ngModel)]="likesAllowed">
+</mat-form-field>
+
+<div class="right">
+  <button mat-raised-button color="primary" (click)="start()">start</button>
+</div>

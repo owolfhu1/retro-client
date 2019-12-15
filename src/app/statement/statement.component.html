@@ -1,0 +1,54 @@
+<mat-icon *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
+
+<h2 class="line-breaks">{{ statement.text }}</h2>
+
+<button
+  [disabled]="!socketService.votesLeft"
+  mat-icon-button
+  matBadgePosition="before"
+  [matBadge]="statement.ups ? statement.ups : null"
+  (click)="vote('ups')">
+  <mat-icon>thumb_up</mat-icon>
+</button>
+
+<button
+  [disabled]="!socketService.votesLeft"
+  mat-icon-button
+  [matBadge]="statement.downs ? statement.downs : null"
+  (click)="vote('downs')">
+  <mat-icon>thumb_down</mat-icon>
+</button>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<button
+  mat-icon-button
+  matTooltip="add a comment" (click)="comment()">
+  <mat-icon>add_comment</mat-icon>
+</button>
+
+<button
+  mat-icon-button
+  [disabled]="!canEdit"
+  (click)="edit()">
+  <mat-icon>edit</mat-icon>
+</button>
+
+<mat-card *ngFor="let comment of statement.comments; let i = index">
+  <h3 class="line-breaks">{{ comment.text }}</h3>
+  <button
+    (click)="commentVote('ups', i)"
+    [disabled]="!socketService.votesLeft"
+    mat-icon-button
+    matBadgePosition="before"
+    [matBadge]="comment.ups">
+    <mat-icon>thumb_up</mat-icon>
+  </button>
+  <button
+    (click)="commentVote('downs', i)"
+    [disabled]="!socketService.votesLeft"
+    mat-icon-button
+    [matBadge]="comment.downs">
+    <mat-icon>thumb_down</mat-icon>
+  </button>
+</mat-card>

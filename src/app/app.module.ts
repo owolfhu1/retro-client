@@ -3,16 +3,64 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateComponent, CreateDialogComponent } from './create/create.component';
+import { HomeComponent } from './home/home.component';
+import {
+  MatBadgeModule,
+  MatButtonModule,
+  MatCardModule,
+  MatChipsModule,
+  MatDialogModule, MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatToolbarModule, MatTooltipModule
+} from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {InstanceComponent, WriteDialogComponent} from './instance/instance.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { StatementComponent } from './statement/statement.component';
+
+// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CreateComponent,
+    HomeComponent,
+    CreateDialogComponent,
+    InstanceComponent,
+    WriteDialogComponent,
+    StatementComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    AppRoutingModule,
+    SocketIoModule.forRoot(config),
+    MatCardModule,
+    DragDropModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatExpansionModule,
+    MatTooltipModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CreateDialogComponent,
+    WriteDialogComponent,
+  ]
 })
 export class AppModule { }
