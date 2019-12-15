@@ -77,7 +77,8 @@
       <div
         [ngClass]="trashClass(junk)"
         *ngFor="let junk of socketService.instance.trash; let i = index"
-        cdkDrag>
+        cdkDrag
+        [matTooltip]="junk.text">
         <span
           style="color: red"
           (click)="delete(i)"
