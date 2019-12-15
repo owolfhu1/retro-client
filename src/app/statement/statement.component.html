@@ -41,14 +41,14 @@
     [disabled]="!socketService.votesLeft"
     mat-icon-button
     matBadgePosition="before"
-    [matBadge]="comment.ups">
+    [matBadge]="comment.ups ? comment.ups : null">
     <mat-icon>thumb_up</mat-icon>
   </button>
   <button
     (click)="commentVote('downs', i)"
     [disabled]="!socketService.votesLeft"
     mat-icon-button
-    [matBadge]="comment.downs">
+    [matBadge]="comment.downs ? comment.downs : null">
     <mat-icon>thumb_down</mat-icon>
   </button>
 </mat-card>
