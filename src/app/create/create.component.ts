@@ -26,7 +26,7 @@ export class CreateComponent implements OnInit {
   styleUrls: ['./create.component.css']
 })
 export class CreateDialogComponent implements OnDestroy {
-  likesAllowed = 10;
+  likesAllowed = 20;
   title;
   owner;
   destroy$: Subject<boolean> = new Subject<boolean>();
