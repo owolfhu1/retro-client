@@ -29,9 +29,17 @@ export class InstanceComponent implements OnInit {
       const nextIndex = event.currentIndex;
       const lastList = event.previousContainer.id;
       const nextList = event.container.id;
-      const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
-      this.socketService.instance[nextList].splice(nextIndex, 0, item);
-      this.socketService.emit('drop', { lastIndex, nextIndex, lastList, nextList });
+      const tempItem = this.socketService.instance[lastList][lastIndex];
+      if (
+        tempItem.author !== this.socketService.name &&
+        this.socketService.instance.owner !== this.socketService.name
+      ) {
+        alert('You may only move your own statements.');
+      } else {
+        const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
+        this.socketService.instance[nextList].splice(nextIndex, 0, item);
+        this.socketService.emit('drop', { lastIndex, nextIndex, lastList, nextList });
+      }
     }
   }
 
@@ -40,9 +48,17 @@ export class InstanceComponent implements OnInit {
       const lastIndex = event.previousIndex;
       const nextIndex = event.currentIndex;
       const lastList = event.previousContainer.id;
-      const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
-      this.socketService.instance.trash.splice(nextIndex, 0, item);
-      this.socketService.emit('trash', { lastIndex, nextIndex, lastList });
+      const tempItem = this.socketService.instance[lastList][lastIndex];
+      if (
+        tempItem.author !== this.socketService.name &&
+        this.socketService.instance.owner !== this.socketService.name
+      ) {
+        alert('You may only move your own statements.');
+      } else {
+        const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
+        this.socketService.instance.trash.splice(nextIndex, 0, item);
+        this.socketService.emit('trash', {lastIndex, nextIndex, lastList});
+      }
     }
   }
 

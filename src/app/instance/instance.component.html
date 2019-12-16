@@ -77,15 +77,16 @@
       <div
         [ngClass]="trashClass(junk)"
         *ngFor="let junk of socketService.instance.trash; let i = index"
-        cdkDrag
-        [matTooltip]="junk.text">
+        cdkDrag>
         <span
-          style="color: red"
+          class="delete-button"
           (click)="delete(i)"
           matTooltip="delete">
-          (X)
+          X
         </span>
-        {{ displayJunk(junk) }} ...
+        <span [matTooltip]="junk.text">
+          {{ displayJunk(junk) }}...
+        </span>
       </div>
     </div>
 

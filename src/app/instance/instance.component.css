@@ -19,6 +19,8 @@
   position: fixed;
   bottom: 5px;
   right: 5px;
+  padding: 5px;
+  overflow: auto;
 }
 
 .trash-handle {
@@ -39,7 +41,15 @@
   font-size: xx-small;
   margin: 3px;
   border-radius: 3px;
-  padding-left: 3px;
+}
+
+.delete-button {
+  color: red;
+  background: floralwhite;
+  border: red solid 1px;
+  border-radius: 6px;
+  padding-left: 2px;
+  margin-right: 2px;
 }
 
 .corner-button {
@@ -53,7 +63,6 @@
   position: absolute;
   top: 5px;
   left: 5px;
-  z-index: 50;
   color: red;
 }
 
