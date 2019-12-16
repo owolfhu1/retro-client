@@ -23,13 +23,15 @@
 
 <button
   mat-icon-button
-  matTooltip="add a comment" (click)="comment()">
+  matTooltip="add a comment"
+  (click)="comment()">
   <mat-icon>add_comment</mat-icon>
 </button>
 
 <button
   mat-icon-button
   [disabled]="!canEdit"
+  matTooltip="edit statement"
   (click)="edit()">
   <mat-icon>edit</mat-icon>
 </button>
