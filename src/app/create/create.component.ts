@@ -47,10 +47,15 @@ export class CreateDialogComponent implements OnDestroy {
   }
 
   start() {
-    if (this.owner && this.title) {
-      this.socketService.startInstance(this.title, this.likesAllowed, this.owner);
+    let title = this.title.replace(' ', '');
+    title = title.replace('?', '');
+    title = title.replace('/', '');
+    title = title.replace('=', '');
+    const owner = this.owner.replace(' ', '');
+    if (owner && title && this.likesAllowed > -1) {
+      this.socketService.startInstance(title, this.likesAllowed, owner);
     } else {
-      alert('please fill in all fields');
+      alert('please fill in all fields with letters');
     }
   }
 

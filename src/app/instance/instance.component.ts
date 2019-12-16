@@ -10,8 +10,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
   styleUrls: ['./instance.component.css']
 })
 export class InstanceComponent implements OnInit {
-  nameInput;
-  title;
+  nameInput = '';
+  title = '';
 
   constructor(
     public socketService: SocketService,
@@ -75,7 +75,9 @@ export class InstanceComponent implements OnInit {
   }
 
   join() {
-    this.socketService.emit('join', { instanceId: this.title, name: this.nameInput });
+    const name = this.nameInput.replace(' ', '');
+    if (!name) { return; }
+    this.socketService.emit('join', { instanceId: this.title, name });
   }
 
   write(type) {
