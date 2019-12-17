@@ -15,7 +15,12 @@ export class SocketService {
     socket.fromEvent<string>('test').subscribe(alert);
     socket.fromEvent<string>('instance').subscribe(instance => this.instance = instance);
     socket.fromEvent<string>('set-name').subscribe(name => this.name = name);
-    setTimeout(() => this.emit('ping', 'stay alive'), 600000);
+    socket.fromEvent<void>('reset').subscribe(_ => {
+      alert('WOOPS! Looks like you got out of sync with the server. SORRY! Log back in to continue.');
+      this.name = undefined;
+      this.instance = undefined;
+    });
+    setInterval(() => this.emit('ping', 'stay alive'), 600000);
   }
 
   startInstance(title, votesAllowed, owner) {
