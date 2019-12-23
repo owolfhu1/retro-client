@@ -71,6 +71,12 @@ export class InstanceComponent implements OnInit {
     };
   }
 
+  canDelete(index): boolean {
+    const statement = this.socketService.instance.trash[index];
+    const isOwner = this.socketService.instance.owner === this.socketService.name;
+    return isOwner ? true : statement.author === this.socketService.name;
+  }
+
   delete(index) {
     const item = this.socketService.instance.trash[index];
     if (this.socketService.instance.owner === this.socketService.name) {
@@ -106,8 +112,7 @@ export class InstanceComponent implements OnInit {
   }
 
   displayJunk (junk) {
-    const length = junk.text.legnth;
-    return junk.text.substring(0, length < 17 ? length - 1 : 16);
+    return junk.text.substring(0, 10);
   }
 }
 

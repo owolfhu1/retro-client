@@ -13,8 +13,8 @@
 }
 
 .trash {
-  width: 100px;
-  height: 150px;
+  width: 120px;
+  height: 170px;
   z-index: 100;
   position: fixed;
   bottom: 5px;
@@ -37,19 +37,20 @@
 }
 
 .trash-object {
-  height: 10px;
-  font-size: xx-small;
+  height: 16px;
+  font-size: small;
   margin: 3px;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 .delete-button {
-  color: red;
+  height: 16px;
+  width: 16px;
   background: floralwhite;
+  padding-top: 0;
   border: red solid 1px;
-  border-radius: 6px;
-  padding-left: 2px;
-  margin-right: 2px;
+  border-radius: 8px;
+  padding-left: 3px;
 }
 
 .corner-button {

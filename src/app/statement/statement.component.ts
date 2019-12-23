@@ -27,6 +27,10 @@ export class StatementComponent implements OnInit {
     this.socketService.emit('comment-vote-' + type, { statementId: this.statement.id, index });
   }
 
+  unCommentVote(type, index) {
+    this.socketService.emit('un-comment-vote-' + type, { statementId: this.statement.id, index });
+  }
+
   get canEdit() {
     return this.socketService.instance.owner === this.socketService.name
       || this.statement.author === this.socketService.name;
@@ -50,4 +54,17 @@ export class StatementComponent implements OnInit {
       });
   }
 
+  calcVotes(obj, type) {
+    let votes = 0;
+    obj[type].forEach(name => votes += name === this.socketService.name ? 1 : 0);
+    return votes === 0 ? null : votes + '';
+  }
+
+  iVoted(obj, type): boolean {
+    return obj[type].indexOf(this.socketService.name) > -1;
+  }
+
+  unVote(type) {
+    this.socketService.emit('un-vote-' + type, this.statement.id);
+  }
 }

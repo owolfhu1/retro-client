@@ -3,10 +3,16 @@
 <h2 class="line-breaks">{{ statement.text }}</h2>
 
 <button
+  mat-icon-button
+  (click)="unVote('ups')"
+  *ngIf="iVoted(statement, 'ups')">
+  <mat-icon>undo</mat-icon>
+</button>
+<button
   [disabled]="!socketService.votesLeft"
   mat-icon-button
   matBadgePosition="before"
-  [matBadge]="statement.ups ? statement.ups : null"
+  [matBadge]="calcVotes(statement, 'ups')"
   (click)="vote('ups')">
   <mat-icon>thumb_up</mat-icon>
 </button>
@@ -14,9 +20,15 @@
 <button
   [disabled]="!socketService.votesLeft"
   mat-icon-button
-  [matBadge]="statement.downs ? statement.downs : null"
+  [matBadge]="calcVotes(statement, 'downs')"
   (click)="vote('downs')">
   <mat-icon>thumb_down</mat-icon>
+</button>
+<button
+  mat-icon-button
+  (click)="unVote('downs')"
+  *ngIf="iVoted(statement, 'downs')">
+  <mat-icon>undo</mat-icon>
 </button>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -39,18 +51,30 @@
 <mat-card *ngFor="let comment of statement.comments; let i = index">
   <h3 class="line-breaks">{{ comment.text }}</h3>
   <button
+    mat-icon-button
+    (click)="unCommentVote('ups', i)"
+    *ngIf="iVoted(comment, 'ups')">
+    <mat-icon>undo</mat-icon>
+  </button>
+  <button
     (click)="commentVote('ups', i)"
     [disabled]="!socketService.votesLeft"
     mat-icon-button
     matBadgePosition="before"
-    [matBadge]="comment.ups ? comment.ups : null">
+    [matBadge]="calcVotes(comment, 'ups')">
     <mat-icon>thumb_up</mat-icon>
   </button>
   <button
     (click)="commentVote('downs', i)"
     [disabled]="!socketService.votesLeft"
     mat-icon-button
-    [matBadge]="comment.downs ? comment.downs : null">
+    [matBadge]="calcVotes(comment, 'downs')">
     <mat-icon>thumb_down</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="unCommentVote('downs', i)"
+    *ngIf="iVoted(comment, 'downs')">
+    <mat-icon>undo</mat-icon>
   </button>
 </mat-card>

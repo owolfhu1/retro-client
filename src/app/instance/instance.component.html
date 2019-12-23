@@ -78,14 +78,15 @@
         [ngClass]="trashClass(junk)"
         *ngFor="let junk of socketService.instance.trash; let i = index"
         cdkDrag>
-        <span
+        <button
           class="delete-button"
+          [disabled]="!canDelete(i)"
           (click)="delete(i)"
           matTooltip="delete">
           X
-        </span>
+        </button>
         <span [matTooltip]="junk.text">
-          {{ displayJunk(junk) }}...
+          {{ displayJunk(junk) }}
         </span>
       </div>
     </div>

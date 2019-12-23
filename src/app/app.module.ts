@@ -19,8 +19,8 @@ import {
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import {InstanceComponent, WriteDialogComponent} from './instance/instance.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { InstanceComponent, WriteDialogComponent } from './instance/instance.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatementComponent } from './statement/statement.component';
 
 // const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
