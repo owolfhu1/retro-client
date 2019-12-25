@@ -31,6 +31,12 @@ export class SocketService {
     this.socket.emit(action, data);
   }
 
+  get disabled(): boolean {
+    if (!this.instance) { return true; }
+    if (this.instance.owner === this.name) { return false; }
+    return this.instance.locked;
+  }
+
   get votesLeft() {
     if (!this.instance || !this.name) {
       return 0;

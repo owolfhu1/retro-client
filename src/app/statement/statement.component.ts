@@ -55,8 +55,8 @@ export class StatementComponent implements OnInit {
   }
 
   calcVotes(obj, type) {
-    let votes = 0;
-    obj[type].forEach(name => votes += name === this.socketService.name ? 1 : 0);
+    let votes = obj[type].length;
+    // obj[type].forEach(name => votes += name === this.socketService.name ? 1 : 0);
     return votes === 0 ? null : votes + '';
   }
 

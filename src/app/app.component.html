@@ -9,6 +9,17 @@
           {{ socketService.instance.title }}
         </h2></mat-chip>
 
+        <mat-chip
+          color="primary"
+          selected
+          [matTooltip]="'Instance is ' + (socketService.instance.locked ? '' : 'un') + 'locked.'"
+          [disabled]="socketService.instance.owner !== socketService.name"
+          (click)="onLockPress()">
+          <mat-icon *ngIf="socketService.instance.locked">lock</mat-icon>
+          <mat-icon *ngIf="!socketService.instance.locked">lock_open</mat-icon>
+        </mat-chip>
+
+
         <mat-chip color="primary" selected>
           <mat-icon matTooltip="votes left">how_to_vote</mat-icon>
           {{ socketService.votesLeft }}

@@ -12,4 +12,7 @@ export class AppComponent {
     public socketService: SocketService
   ) {}
 
+  onLockPress() {
+    this.socketService.emit('lock', null);
+  }
 }

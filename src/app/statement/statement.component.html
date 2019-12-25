@@ -5,11 +5,12 @@
 <button
   mat-icon-button
   (click)="unVote('ups')"
+  [disabled]="socketService.disabled"
   *ngIf="iVoted(statement, 'ups')">
   <mat-icon>undo</mat-icon>
 </button>
 <button
-  [disabled]="!socketService.votesLeft"
+  [disabled]="!socketService.votesLeft || this.socketService.disabled"
   mat-icon-button
   matBadgePosition="before"
   [matBadge]="calcVotes(statement, 'ups')"
@@ -18,7 +19,7 @@
 </button>
 
 <button
-  [disabled]="!socketService.votesLeft"
+  [disabled]="!socketService.votesLeft || this.socketService.disabled"
   mat-icon-button
   [matBadge]="calcVotes(statement, 'downs')"
   (click)="vote('downs')">
@@ -27,6 +28,7 @@
 <button
   mat-icon-button
   (click)="unVote('downs')"
+  [disabled]="socketService.disabled"
   *ngIf="iVoted(statement, 'downs')">
   <mat-icon>undo</mat-icon>
 </button>
@@ -36,13 +38,14 @@
 <button
   mat-icon-button
   matTooltip="add a comment"
+  [disabled]="socketService.disabled"
   (click)="comment()">
   <mat-icon>add_comment</mat-icon>
 </button>
 
 <button
   mat-icon-button
-  [disabled]="!canEdit"
+  [disabled]="!canEdit || socketService.disabled"
   matTooltip="edit statement"
   (click)="edit()">
   <mat-icon>edit</mat-icon>
@@ -53,12 +56,13 @@
   <button
     mat-icon-button
     (click)="unCommentVote('ups', i)"
+    [disabled]="socketService.disabled"
     *ngIf="iVoted(comment, 'ups')">
     <mat-icon>undo</mat-icon>
   </button>
   <button
     (click)="commentVote('ups', i)"
-    [disabled]="!socketService.votesLeft"
+    [disabled]="!socketService.votesLeft || socketService.disabled"
     mat-icon-button
     matBadgePosition="before"
     [matBadge]="calcVotes(comment, 'ups')">
@@ -66,7 +70,7 @@
   </button>
   <button
     (click)="commentVote('downs', i)"
-    [disabled]="!socketService.votesLeft"
+    [disabled]="!socketService.votesLeft || socketService.disabled"
     mat-icon-button
     [matBadge]="calcVotes(comment, 'downs')">
     <mat-icon>thumb_down</mat-icon>
@@ -74,6 +78,7 @@
   <button
     mat-icon-button
     (click)="unCommentVote('downs', i)"
+    [disabled]="socketService.disabled"
     *ngIf="iVoted(comment, 'downs')">
     <mat-icon>undo</mat-icon>
   </button>

@@ -25,6 +25,10 @@ export class InstanceComponent implements OnInit {
 
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.isPointerOverContainer) {
+      if (this.socketService.disabled) {
+        alert('You can not edit a locked instance.');
+        return;
+      }
       const lastIndex = event.previousIndex;
       const nextIndex = event.currentIndex;
       const lastList = event.previousContainer.id;
@@ -45,6 +49,10 @@ export class InstanceComponent implements OnInit {
 
   trash(event: CdkDragDrop<Statement[]>) {
     if (event.isPointerOverContainer) {
+      if (this.socketService.disabled) {
+        alert('You can not edit a locked instance.');
+        return;
+      }
       const lastIndex = event.previousIndex;
       const nextIndex = event.currentIndex;
       const lastList = event.previousContainer.id;
