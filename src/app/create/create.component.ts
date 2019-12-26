@@ -27,6 +27,7 @@ export class CreateComponent implements OnInit {
 })
 export class CreateDialogComponent implements OnDestroy {
   likesAllowed = 20;
+  negativeVotesAllowed = true;
   title;
   owner;
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -53,7 +54,7 @@ export class CreateDialogComponent implements OnDestroy {
     title = title.replace('=', '');
     const owner = this.owner.replace(' ', '');
     if (owner && title && this.likesAllowed > -1) {
-      this.socketService.startInstance(title, this.likesAllowed, owner);
+      this.socketService.startInstance(title, this.likesAllowed, this.negativeVotesAllowed, owner);
     } else {
       alert('please fill in all fields with letters');
     }

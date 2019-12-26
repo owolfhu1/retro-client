@@ -12,6 +12,10 @@
   <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
 </mat-form-field>
 
+<mat-checkbox [(ngModel)]="negativeVotesAllowed">Allow Negative Votes</mat-checkbox>
+
+<br/><br/>
+
 <div class="right">
   <button mat-raised-button color="primary" (click)="start()">start</button>
 </div>

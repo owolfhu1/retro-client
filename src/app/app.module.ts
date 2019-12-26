@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import {
   MatBadgeModule,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatChipsModule,
   MatDialogModule, MatExpansionModule,
   MatFormFieldModule,
@@ -54,6 +54,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     MatBadgeModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatCheckboxModule,
   ],
   providers: [
   ],
