@@ -134,7 +134,7 @@ export class InstanceComponent implements OnInit {
           <textarea matInput [(ngModel)]="text"></textarea>
       </mat-form-field>
       <div class="right-buttons">
-        <button mat-fab color="primary" (click)="dialogRef.close(text)">
+        <button mat-fab color="primary" (click)="close(text)">
             <mat-icon *ngIf="!isEdit">add</mat-icon>
             <mat-icon *ngIf="isEdit">done</mat-icon>
         </button>
@@ -149,12 +149,21 @@ export class WriteDialogComponent {
   text: string;
   isEdit: boolean;
   constructor(
+    public socketService: SocketService,
     public dialogRef: MatDialogRef<WriteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
     this.text = data;
     this.isEdit = !!data;
   }
+  close(text) {
+    if (this.socketService.instance.locked && this.socketService.instance.owner !== this.socketService.name) {
+      alert('You can not do that, the instance has been locked.');
+      this.dialogRef.close();
+    } else {
+      this.dialogRef.close(text);
+    }
+  };
 }
 
 
