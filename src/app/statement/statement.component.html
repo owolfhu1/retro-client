@@ -93,7 +93,7 @@
   <button
     mat-icon-button
     [disabled]="!canEditComment(i) || socketService.disabled"
-    (click)="editComment(comment.id)"
+    (click)="editComment(comment.id, comment.text)"
     matTooltip="edit comment">
     <mat-icon>edit</mat-icon>
   </button>

@@ -48,8 +48,8 @@ export class StatementComponent {
       });
   }
 
-  editComment(commentId) {
-    this.dialog.open(WriteDialogComponent, { width: '300px' })
+  editComment(commentId, data) {
+    this.dialog.open(WriteDialogComponent, { width: '300px', data })
       .afterClosed().subscribe(text => {
         if (text) {
           this.socketService.emit('edit-comment', { statementId: this.statement.id, commentId, text });
