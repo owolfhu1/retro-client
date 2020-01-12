@@ -48,6 +48,19 @@ export class StatementComponent {
       });
   }
 
+  editComment(commentId) {
+    this.dialog.open(WriteDialogComponent, { width: '300px' })
+      .afterClosed().subscribe(text => {
+        if (text) {
+          this.socketService.emit('edit-comment', { statementId: this.statement.id, commentId, text });
+        }
+      });
+  }
+
+  deleteComment(commentId) {
+    this.socketService.emit('delete-comment', { statementId: this.statement.id, commentId });
+  }
+
   comment() {
     this.dialog.open(WriteDialogComponent, { width: '300px' })
       .afterClosed().subscribe(text => {

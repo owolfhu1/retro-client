@@ -53,7 +53,10 @@
 </button>
 
 <mat-card *ngFor="let comment of statement.comments; let i = index">
+  <mat-icon *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
+
   <h3 class="line-breaks">{{ comment.text }}</h3>
+
   <button
     mat-icon-button
     (click)="unCommentVote('ups', comment.id)"
@@ -90,6 +93,7 @@
   <button
     mat-icon-button
     [disabled]="!canEditComment(i) || socketService.disabled"
+    (click)="editComment(comment.id)"
     matTooltip="edit comment">
     <mat-icon>edit</mat-icon>
   </button>
@@ -98,6 +102,7 @@
     mat-icon-button
     [disabled]="!canEditComment(i) || socketService.disabled"
     color="warn"
+    (click)="deleteComment(comment.id)"
     matTooltip="delete comment">
     <mat-icon>delete</mat-icon>
   </button>

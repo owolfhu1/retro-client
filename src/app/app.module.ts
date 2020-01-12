@@ -23,8 +23,8 @@ import { InstanceComponent, WriteDialogComponent } from './instance/instance.com
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatementComponent } from './statement/statement.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-// const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
