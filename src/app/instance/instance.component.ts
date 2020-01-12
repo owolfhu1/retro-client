@@ -34,6 +34,7 @@ export class InstanceComponent implements OnInit {
       const lastList = event.previousContainer.id;
       const nextList = event.container.id;
       const tempItem = this.socketService.instance[lastList][lastIndex];
+      const id = tempItem.id;
       if (
         tempItem.author !== this.socketService.name &&
         this.socketService.instance.owner !== this.socketService.name
@@ -42,21 +43,22 @@ export class InstanceComponent implements OnInit {
       } else {
         const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
         this.socketService.instance[nextList].splice(nextIndex, 0, item);
-        this.socketService.emit('drop', { lastIndex, nextIndex, lastList, nextList });
+        this.socketService.emit('drop', { lastIndex, nextIndex, lastList, nextList, id });
       }
     }
   }
 
-  trash(event: CdkDragDrop<Statement[]>) {
-    if (event.isPointerOverContainer) {
+  trash(event: CdkDragDrop<Statement[]> | any) {
+    if (event.isPointerOverContainer || event.manual) {
       if (this.socketService.disabled) {
         alert('You can not edit a locked instance.');
         return;
       }
-      const lastIndex = event.previousIndex;
-      const nextIndex = event.currentIndex;
-      const lastList = event.previousContainer.id;
+      const lastIndex = event.manual ? event.lastIndex : event.previousIndex;
+      const nextIndex = event.manual ? null : event.currentIndex;
+      const lastList = event.manual ? event.lastList : event.previousContainer.id;
       const tempItem = this.socketService.instance[lastList][lastIndex];
+      const id = tempItem.id;
       if (
         tempItem.author !== this.socketService.name &&
         this.socketService.instance.owner !== this.socketService.name
@@ -65,7 +67,7 @@ export class InstanceComponent implements OnInit {
       } else {
         const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
         this.socketService.instance.trash.splice(nextIndex, 0, item);
-        this.socketService.emit('trash', {lastIndex, nextIndex, lastList});
+        this.socketService.emit('trash', { lastIndex, nextIndex, lastList, id });
       }
     }
   }
@@ -131,19 +133,17 @@ export class InstanceComponent implements OnInit {
       <mat-form-field style="width: 100%">
           <textarea matInput [(ngModel)]="text"></textarea>
       </mat-form-field>
-      <br>
-      <button mat-fab color="primary" (click)="dialogRef.close(text)">
-          <mat-icon *ngIf="!isEdit">add</mat-icon>
-          <mat-icon *ngIf="isEdit">done</mat-icon>
-      </button>
-      &nbsp;&nbsp;
-      <button mat-fab color="warn" (click)="dialogRef.close()">
-          <mat-icon>clear</mat-icon>
-      </button>
-  `,
-  styles: [`
-
-  `]
+      <div class="right-buttons">
+        <button mat-fab color="primary" (click)="dialogRef.close(text)">
+            <mat-icon *ngIf="!isEdit">add</mat-icon>
+            <mat-icon *ngIf="isEdit">done</mat-icon>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-fab color="warn" (click)="dialogRef.close()">
+            <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+  `
 })
 export class WriteDialogComponent {
   text: string;

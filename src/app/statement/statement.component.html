@@ -56,13 +56,13 @@
   <h3 class="line-breaks">{{ comment.text }}</h3>
   <button
     mat-icon-button
-    (click)="unCommentVote('ups', i)"
+    (click)="unCommentVote('ups', comment.id)"
     [disabled]="socketService.disabled"
     *ngIf="iVoted(comment, 'ups')">
     <mat-icon>undo</mat-icon>
   </button>
   <button
-    (click)="commentVote('ups', i)"
+    (click)="commentVote('ups', comment.id)"
     [disabled]="!socketService.votesLeft || socketService.disabled"
     mat-icon-button
     matBadgePosition="before"
@@ -71,7 +71,7 @@
   </button>
   <button
     *ngIf="socketService.instance.negativeVotesAllowed"
-    (click)="commentVote('downs', i)"
+    (click)="commentVote('downs', comment.id)"
     [disabled]="!socketService.votesLeft || socketService.disabled"
     mat-icon-button
     [matBadge]="calcVotes(comment, 'downs')">
@@ -79,9 +79,35 @@
   </button>
   <button
     mat-icon-button
-    (click)="unCommentVote('downs', i)"
+    (click)="unCommentVote('downs', comment.id)"
     [disabled]="socketService.disabled"
     *ngIf="iVoted(comment, 'downs')">
     <mat-icon>undo</mat-icon>
   </button>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  <button
+    mat-icon-button
+    [disabled]="!canEditComment(i) || socketService.disabled"
+    matTooltip="edit comment">
+    <mat-icon>edit</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    [disabled]="!canEditComment(i) || socketService.disabled"
+    color="warn"
+    matTooltip="delete comment">
+    <mat-icon>delete</mat-icon>
+  </button>
 </mat-card>
+
+<button
+  class="delete-button"
+  mat-icon-button
+  [disabled]="!canEdit || socketService.disabled"
+  (click)="trashStatement.emit()"
+  matTooltip="delete statement">
+  <mat-icon>cancel</mat-icon>
+</button>

@@ -14,3 +14,7 @@ app-instance {
   display: flex;
   flex-direction: column;
 }
+
+.right-buttons {
+  text-align: right;
+}

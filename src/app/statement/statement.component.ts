@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SocketService} from '../socket.service';
 import {MatDialog} from '@angular/material';
 import {WriteDialogComponent} from '../instance/instance.component';
@@ -8,32 +8,35 @@ import {WriteDialogComponent} from '../instance/instance.component';
   templateUrl: './statement.component.html',
   styleUrls: ['./statement.component.css']
 })
-export class StatementComponent implements OnInit {
+export class StatementComponent {
   @Input() statement;
+  @Output() trashStatement: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     public socketService: SocketService,
     private dialog: MatDialog,
   ) {}
 
-  ngOnInit() {
-  }
-
   vote(type) {
     this.socketService.emit('vote-' + type, this.statement.id);
   }
 
-  commentVote(type, index) {
-    this.socketService.emit('comment-vote-' + type, { statementId: this.statement.id, index });
+  commentVote(type, commentId) {
+    this.socketService.emit('comment-vote-' + type, { statementId: this.statement.id, commentId });
   }
 
-  unCommentVote(type, index) {
-    this.socketService.emit('un-comment-vote-' + type, { statementId: this.statement.id, index });
+  unCommentVote(type, commentId) {
+    this.socketService.emit('un-comment-vote-' + type, { statementId: this.statement.id, commentId });
   }
 
-  get canEdit() {
+  get canEdit(): boolean {
     return this.socketService.instance.owner === this.socketService.name
       || this.statement.author === this.socketService.name;
+  }
+
+  canEditComment(index): boolean {
+    return this.socketService.instance.owner === this.socketService.name
+      || this.statement.comments[index].author === this.socketService.name;
   }
 
   edit() {
@@ -55,9 +58,7 @@ export class StatementComponent implements OnInit {
   }
 
   calcVotes(obj, type) {
-    let votes = obj[type].length;
-    // obj[type].forEach(name => votes += name === this.socketService.name ? 1 : 0);
-    return votes === 0 ? null : votes + '';
+    return  obj[type].length === 0 ? null :  obj[type].length + '';
   }
 
   iVoted(obj, type): boolean {

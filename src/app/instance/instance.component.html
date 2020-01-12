@@ -14,8 +14,11 @@
             (cdkDropListDropped)="drop($event)">
     <h1 class="center">Went Well</h1>
 
-    <mat-card class="good" *ngFor="let statement of socketService.instance.goods" cdkDrag>
-      <app-statement [statement]="statement"></app-statement>
+    <mat-card class="good" *ngFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
+      <app-statement
+        [statement]="statement"
+        (trashStatement)="trash({ lastIndex: i, lastList: 'goods', manual: true })">
+      </app-statement>
     </mat-card>
 
     <button
@@ -34,8 +37,11 @@
             (cdkDropListDropped)="drop($event)">
     <h1 class="center">Not Well</h1>
 
-    <mat-card class="bad" *ngFor="let statement of socketService.instance.bads" cdkDrag>
-      <app-statement [statement]="statement"></app-statement>
+    <mat-card class="bad" *ngFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
+      <app-statement
+        [statement]="statement"
+        (trashStatement)="trash({ lastIndex: i, lastList: 'bads', manual: true })">
+      </app-statement>
     </mat-card>
 
     <button
@@ -54,8 +60,11 @@
             (cdkDropListDropped)="drop($event)">
     <h1 class="center">Action Items</h1>
 
-    <mat-card class="action" *ngFor="let statement of socketService.instance.actions" cdkDrag>
-      <app-statement [statement]="statement"></app-statement>
+    <mat-card class="action" *ngFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
+      <app-statement
+        [statement]="statement"
+        (trashStatement)="trash({ lastIndex: i, lastList: 'actions', manual: true })">
+      </app-statement>
     </mat-card>
 
     <button

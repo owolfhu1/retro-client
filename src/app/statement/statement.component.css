@@ -10,3 +10,9 @@ mat-card {
 }
 
 .line-breaks { white-space: pre-wrap }
+
+.delete-button {
+  position: absolute;
+  top: 1px;
+  right: 3px;
+}
