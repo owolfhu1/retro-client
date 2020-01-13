@@ -53,6 +53,12 @@
   padding-left: 3px;
 }
 
+.trash-lock {
+  position: absolute;
+  top: 5px;
+  right: 28px;
+}
+
 .corner-button {
   position: absolute;
   top: 5px;

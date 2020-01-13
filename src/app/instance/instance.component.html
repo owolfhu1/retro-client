@@ -92,7 +92,7 @@
         cdkDrag>
         <button
           class="delete-button"
-          [disabled]="!canDelete(i) || socketService.disabled"
+          [disabled]="!canDelete(i) || socketService.disabled || socketService.instance.trashIsLocked"
           (click)="delete(i)"
           matTooltip="delete">
           X
@@ -104,12 +104,19 @@
     </div>
 
     <mat-icon
-      *ngIf="socketService.instance.owner === socketService.name"
+      *ngIf="socketService.instance.owner === socketService.name && !socketService.instance.trashIsLocked"
       matTooltip="delete all"
       class="left-corner-button"
       color="warn"
       (click)="deleteAll()">
       delete
+    </mat-icon>
+    <mat-icon
+      [color]="socketService.instance.trashIsLocked ? 'warn' : 'accent'"
+      (click)="socketService.emit('lock-trash', null)"
+      [matTooltip]="'Trash is ' + (socketService.instance.trashIsLocked ? '' : 'un') + 'locked.'"
+      class="trash-lock">
+      {{ socketService.instance.trashIsLocked ? 'lock' : 'lock_open' }}
     </mat-icon>
     <mat-icon class="trash-handle" cdkDragHandle>open_with</mat-icon>
   </mat-card>
