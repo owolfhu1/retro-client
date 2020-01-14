@@ -22,6 +22,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { InstanceComponent, WriteDialogComponent } from './instance/instance.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatementComponent } from './statement/statement.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 // const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
 const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
@@ -55,6 +56,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     MatExpansionModule,
     MatTooltipModule,
     MatCheckboxModule,
+    ScrollingModule,
   ],
   providers: [
   ],

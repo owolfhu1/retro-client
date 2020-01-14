@@ -8,19 +8,19 @@
 .section {
   width: 30%;
   margin: 10px;
-  overflow-y: auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .trash {
   width: 120px;
-  height: 170px;
+  height: 140px;
   z-index: 100;
   position: fixed;
   bottom: 5px;
   right: 5px;
-  padding: 5px;
-  overflow: auto;
+  padding: 35px 5px 30px 5px
 }
 
 .trash-handle {
@@ -34,6 +34,12 @@
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
+  padding-top: 20px;
+}
+
+.section-body {
+  flex: 1;
+  border-radius: 5px;
 }
 
 .trash-object {
@@ -81,15 +87,15 @@ mat-card {
   opacity: 0;
 }
 
-#goods {
+#goods-color {
   background: lightgreen;
 }
 
-#bads {
+#bads-color {
   background: lightcoral;
 }
 
-#actions {
+#actions-color {
   background: orange;
 }
 

@@ -9,17 +9,23 @@
 </mat-card>
 
 <div *ngIf="socketService.instance && socketService.name" class="board" cdkDropListGroup>
-  <mat-card class="section" cdkDropList id="goods"
-            [cdkDropListData]="socketService.instance.goods"
-            (cdkDropListDropped)="drop($event)">
+  <mat-card class="section" id="goods-color">
     <h1 class="center">Went Well</h1>
 
-    <mat-card class="good" *ngFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
-      <app-statement
-        [statement]="statement"
-        (trashStatement)="trash({ lastIndex: i, lastList: 'goods', manual: true })">
-      </app-statement>
-    </mat-card>
+    <cdk-virtual-scroll-viewport
+      cdkDropList
+      [cdkDropListData]="socketService.instance.goods"
+      (cdkDropListDropped)="drop($event)"
+      id="goods"
+      itemSize="1"
+      class="section-body">
+      <mat-card class="good" *cdkVirtualFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
+        <app-statement
+          [statement]="statement"
+          (trashStatement)="trash({ lastIndex: i, lastList: 'goods', manual: true })">
+        </app-statement>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
 
     <button
       matTooltip="write statement"
@@ -32,17 +38,23 @@
     </button>
   </mat-card>
 
-  <mat-card class="section" cdkDropList id="bads"
-            [cdkDropListData]="socketService.instance.bads"
-            (cdkDropListDropped)="drop($event)">
+  <mat-card class="section" id="bads-color">
     <h1 class="center">Not Well</h1>
 
-    <mat-card class="bad" *ngFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
-      <app-statement
-        [statement]="statement"
-        (trashStatement)="trash({ lastIndex: i, lastList: 'bads', manual: true })">
-      </app-statement>
-    </mat-card>
+    <cdk-virtual-scroll-viewport
+      cdkDropList
+      [cdkDropListData]="socketService.instance.bads"
+      (cdkDropListDropped)="drop($event)"
+      id="bads"
+      itemSize="1"
+      class="section-body">
+      <mat-card class="bad" *cdkVirtualFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
+        <app-statement
+          [statement]="statement"
+          (trashStatement)="trash({ lastIndex: i, lastList: 'bads', manual: true })">
+        </app-statement>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
 
     <button
       matTooltip="write statement"
@@ -55,17 +67,23 @@
     </button>
   </mat-card>
 
-  <mat-card class="section" cdkDropList id="actions"
-            [cdkDropListData]="socketService.instance.actions"
-            (cdkDropListDropped)="drop($event)">
+  <mat-card class="section" id="actions-color">
     <h1 class="center">Action Items</h1>
 
-    <mat-card class="action" *ngFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
-      <app-statement
-        [statement]="statement"
-        (trashStatement)="trash({ lastIndex: i, lastList: 'actions', manual: true })">
-      </app-statement>
-    </mat-card>
+    <cdk-virtual-scroll-viewport
+      cdkDropList
+      [cdkDropListData]="socketService.instance.actions"
+      (cdkDropListDropped)="drop($event)"
+      id="actions"
+      itemSize="1"
+      class="section-body">
+      <mat-card class="action" *cdkVirtualFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
+        <app-statement
+          [statement]="statement"
+          (trashStatement)="trash({ lastIndex: i, lastList: 'actions', manual: true })">
+        </app-statement>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
 
     <button
       matTooltip="write statement"
@@ -80,15 +98,16 @@
 
 
   <mat-card class="trash" cdkDrag>
-    <div
+    <cdk-virtual-scroll-viewport
       class="trash-body"
       cdkDropList
       id="trash"
       [cdkDropListData]="socketService.instance.trash"
+      itemSize="1"
       (cdkDropListDropped)="trash($event)">
       <div
         [ngClass]="trashClass(junk)"
-        *ngFor="let junk of socketService.instance.trash; let i = index"
+        *cdkVirtualFor="let junk of socketService.instance.trash; let i = index"
         cdkDrag>
         <button
           class="delete-button"
@@ -101,7 +120,7 @@
           {{ displayJunk(junk) }}
         </span>
       </div>
-    </div>
+    </cdk-virtual-scroll-viewport>
 
     <mat-icon
       *ngIf="socketService.instance.owner === socketService.name && !socketService.instance.trashIsLocked"
