@@ -13,6 +13,7 @@ export class SocketService {
 
   constructor(public socket: Socket) {
     socket.fromEvent<string>('test').subscribe(alert);
+    socket.fromEvent<string>('console').subscribe(console.log);
     socket.fromEvent<string>('instance').subscribe(instance => this.instance = instance);
     socket.fromEvent<string>('set-name').subscribe(name => this.name = name);
     socket.fromEvent<void>('reset').subscribe(_ => {
