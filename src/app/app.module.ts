@@ -26,8 +26,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 
-// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+// const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [

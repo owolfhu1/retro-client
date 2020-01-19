@@ -60,9 +60,11 @@
   <mat-icon>emoji_emotions</mat-icon>
 </button>
 
-<mat-chip-list *ngIf="statement.emoji.length">
+<mat-chip-list *ngIf="statement.emoji?.length">
   <mat-chip
     style="overflow: visible"
+    [selected]="obj.names.includes(socketService.name)"
+    color="accent"
     *ngFor="let obj of statement.emoji"
     [matTooltip]="obj.names.join(', ')"
     [disabled]="socketService.disabled"
@@ -120,12 +122,34 @@
 
   <button
     mat-icon-button
+    [disabled]="socketService.disabled"
+    (click)="addCommentEmoji(comment.id)"
+    matTooltip="add an emoji reaction">
+    <mat-icon>emoji_emotions</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
     [disabled]="!canEditComment(i) || socketService.disabled"
     color="warn"
     (click)="deleteComment(comment.id)"
     matTooltip="delete comment">
     <mat-icon>delete</mat-icon>
   </button>
+
+  <mat-chip-list *ngIf="comment.emoji?.length">
+    <mat-chip
+      style="overflow: visible"
+      [selected]="obj.names.includes(socketService.name)"
+      color="accent"
+      *ngFor="let obj of comment.emoji"
+      [matTooltip]="obj.names.join(', ')"
+      [disabled]="socketService.disabled"
+      [matBadge]="obj.names.length === 1 ? null : obj.names.length"
+      (click)="commentEmoji(comment.id, obj.emoji)">
+      <span style="font-size: 30px" >{{ obj.emoji }}</span>
+    </mat-chip>
+  </mat-chip-list>
 </mat-card>
 
 <button

@@ -83,7 +83,6 @@ export class StatementComponent {
   }
 
   emoji(emoji) {
-    console.log(emoji)
     this.socketService.emit('emoji', {id: this.statement.id, emoji});
   }
 
@@ -91,6 +90,18 @@ export class StatementComponent {
     this.dialog.open(EmojiDialogComponent).afterClosed().subscribe(emoji => {
       if (emoji) {
         this.socketService.emit('emoji', {id: this.statement.id, emoji});
+      }
+    });
+  }
+
+  commentEmoji(commentId, emoji) {
+    this.socketService.emit('comment-emoji', {id: this.statement.id, emoji, commentId});
+  }
+
+  addCommentEmoji(commentId) {
+    this.dialog.open(EmojiDialogComponent).afterClosed().subscribe(emoji => {
+      if (emoji) {
+        this.socketService.emit('comment-emoji', {id: this.statement.id, emoji, commentId});
       }
     });
   }
