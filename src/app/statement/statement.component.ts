@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {SocketService} from '../socket.service';
-import {MatDialog} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {WriteDialogComponent} from '../instance/instance.component';
 
 @Component({
@@ -80,5 +80,29 @@ export class StatementComponent {
 
   unVote(type) {
     this.socketService.emit('un-vote-' + type, this.statement.id);
+  }
+
+  emoji(emoji) {
+    console.log(emoji)
+    this.socketService.emit('emoji', {id: this.statement.id, emoji});
+  }
+
+  addEmoji() {
+    this.dialog.open(EmojiDialogComponent).afterClosed().subscribe(emoji => {
+      if (emoji) {
+        this.socketService.emit('emoji', {id: this.statement.id, emoji});
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'emoji-dialog',
+  template: '<emoji-mart (emojiClick)="close($event)"></emoji-mart>'
+})
+export class EmojiDialogComponent {
+  constructor(public dialogRef: MatDialogRef<EmojiDialogComponent>) {}
+  close(event) {
+    this.dialogRef.close(event.emoji.native);
   }
 }
