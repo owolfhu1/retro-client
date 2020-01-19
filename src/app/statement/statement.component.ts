@@ -114,6 +114,6 @@ export class StatementComponent {
 export class EmojiDialogComponent {
   constructor(public dialogRef: MatDialogRef<EmojiDialogComponent>) {}
   close(event) {
-    this.dialogRef.close(event.emoji.native);
+    this.dialogRef.close(event.emoji.colons);
   }
 }

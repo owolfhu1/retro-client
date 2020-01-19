@@ -70,7 +70,7 @@
     [disabled]="socketService.disabled"
     [matBadge]="obj.names.length === 1 ? null : obj.names.length"
     (click)="emoji(obj.emoji)">
-    <span style="font-size: 30px" >{{ obj.emoji }}</span>
+    <ngx-emoji [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>
   </mat-chip>
 </mat-chip-list>
 
@@ -147,7 +147,7 @@
       [disabled]="socketService.disabled"
       [matBadge]="obj.names.length === 1 ? null : obj.names.length"
       (click)="commentEmoji(comment.id, obj.emoji)">
-      <span style="font-size: 30px" >{{ obj.emoji }}</span>
+      <ngx-emoji [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>
     </mat-chip>
   </mat-chip-list>
 </mat-card>

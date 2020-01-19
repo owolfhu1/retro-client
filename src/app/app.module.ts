@@ -24,6 +24,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EmojiDialogComponent, StatementComponent } from './statement/statement.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 
 // const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
@@ -61,6 +62,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     MatCheckboxModule,
     ScrollingModule,
     PickerModule,
+    EmojiModule,
   ],
   providers: [
   ],
