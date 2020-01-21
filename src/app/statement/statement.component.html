@@ -54,13 +54,14 @@
 
 <button
   mat-icon-button
+  *ngIf="socketService.instance.emojiAllowed"
   [disabled]="socketService.disabled"
   (click)="addEmoji()"
   matTooltip="add an emoji reaction">
   <mat-icon>emoji_emotions</mat-icon>
 </button>
 
-<mat-chip-list *ngIf="statement.emoji?.length">
+<mat-chip-list *ngIf="socketService.instance.emojiAllowed && statement.emoji?.length">
   <mat-chip
     style="overflow: visible"
     [selected]="obj.names.includes(socketService.name)"
@@ -122,6 +123,7 @@
 
   <button
     mat-icon-button
+    *ngIf="socketService.instance.emojiAllowed"
     [disabled]="socketService.disabled"
     (click)="addCommentEmoji(comment.id)"
     matTooltip="add an emoji reaction">
@@ -137,7 +139,7 @@
     <mat-icon>delete</mat-icon>
   </button>
 
-  <mat-chip-list *ngIf="comment.emoji?.length">
+  <mat-chip-list *ngIf="socketService.instance.emojiAllowed && comment.emoji?.length">
     <mat-chip
       style="overflow: visible"
       [selected]="obj.names.includes(socketService.name)"
