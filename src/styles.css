@@ -18,3 +18,7 @@ app-instance {
 .right-buttons {
   text-align: right;
 }
+
+#emoji_wrapper {
+  padding: 0;
+}

@@ -87,7 +87,7 @@ export class StatementComponent {
   }
 
   addEmoji() {
-    this.dialog.open(EmojiDialogComponent).afterClosed().subscribe(emoji => {
+    this.dialog.open(EmojiDialogComponent, { id: 'emoji_wrapper' }).afterClosed().subscribe(emoji => {
       if (emoji) {
         this.socketService.emit('emoji', {id: this.statement.id, emoji});
       }
@@ -99,7 +99,7 @@ export class StatementComponent {
   }
 
   addCommentEmoji(commentId) {
-    this.dialog.open(EmojiDialogComponent).afterClosed().subscribe(emoji => {
+    this.dialog.open(EmojiDialogComponent, { id: 'emoji_wrapper' }).afterClosed().subscribe(emoji => {
       if (emoji) {
         this.socketService.emit('comment-emoji', {id: this.statement.id, emoji, commentId});
       }
@@ -110,7 +110,7 @@ export class StatementComponent {
 
 @Component({
   selector: 'emoji-dialog',
-  template: '<emoji-mart (emojiClick)="close($event)"></emoji-mart>'
+  template: '<emoji-mart (emojiClick)="close($event)" set="facebook"></emoji-mart>'
 })
 export class EmojiDialogComponent {
   constructor(public dialogRef: MatDialogRef<EmojiDialogComponent>) {}

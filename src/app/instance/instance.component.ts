@@ -143,7 +143,7 @@ export class InstanceComponent implements OnInit {
             <mat-icon>clear</mat-icon>
         </button>
       </div>
-  `
+  `,
 })
 export class WriteDialogComponent {
   text: string;
