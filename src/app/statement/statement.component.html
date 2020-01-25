@@ -68,7 +68,6 @@
     color="accent"
     *ngFor="let obj of statement.emoji"
     [matTooltip]="obj.names.join(', ')"
-    [disabled]="socketService.disabled"
     [matBadge]="obj.names.length === 1 ? null : obj.names.length"
     (click)="emoji(obj.emoji)">
     <ngx-emoji set="facebook" [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>
@@ -146,7 +145,6 @@
       color="accent"
       *ngFor="let obj of comment.emoji"
       [matTooltip]="obj.names.join(', ')"
-      [disabled]="socketService.disabled"
       [matBadge]="obj.names.length === 1 ? null : obj.names.length"
       (click)="commentEmoji(comment.id, obj.emoji)">
       <ngx-emoji set="facebook" [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>

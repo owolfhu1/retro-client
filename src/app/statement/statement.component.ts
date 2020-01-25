@@ -83,10 +83,12 @@ export class StatementComponent {
   }
 
   emoji(emoji) {
+    if (this.socketService.disabled) return;
     this.socketService.emit('emoji', {id: this.statement.id, emoji});
   }
 
   addEmoji() {
+    if (this.socketService.disabled) return;
     this.dialog.open(EmojiDialogComponent, { id: 'emoji_wrapper' }).afterClosed().subscribe(emoji => {
       if (emoji) {
         this.socketService.emit('emoji', {id: this.statement.id, emoji});
@@ -95,10 +97,12 @@ export class StatementComponent {
   }
 
   commentEmoji(commentId, emoji) {
+    if (this.socketService.disabled) return;
     this.socketService.emit('comment-emoji', {id: this.statement.id, emoji, commentId});
   }
 
   addCommentEmoji(commentId) {
+    if (this.socketService.disabled) return;
     this.dialog.open(EmojiDialogComponent, { id: 'emoji_wrapper' }).afterClosed().subscribe(emoji => {
       if (emoji) {
         this.socketService.emit('comment-emoji', {id: this.statement.id, emoji, commentId});
