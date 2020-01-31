@@ -9,13 +9,17 @@ import { HomeComponent } from './home/home.component';
 import {
   MatBadgeModule,
   MatButtonModule,
-  MatCardModule, MatCheckboxModule,
+  MatCardModule,
+  MatCheckboxModule,
   MatChipsModule,
-  MatDialogModule, MatExpansionModule,
+  MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatToolbarModule, MatTooltipModule
+  MatMenuModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -63,6 +67,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     ScrollingModule,
     PickerModule,
     EmojiModule,
+    MatMenuModule,
   ],
   providers: [
   ],

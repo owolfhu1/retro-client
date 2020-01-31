@@ -12,6 +12,19 @@
         <mat-chip
           color="primary"
           selected
+          matTooltip="Download"
+          [matMenuTriggerFor]="download">
+          <mat-icon>vertical_align_bottom</mat-icon>
+        </mat-chip>
+        <mat-menu #download>
+          <button (click)="downloadCSV()" mat-menu-item>CSV</button>
+          <button mat-menu-item disabled>PDF coming soon</button>
+          <button mat-menu-item disabled>DOC coming soon</button>
+        </mat-menu>
+
+        <mat-chip
+          color="primary"
+          selected
           [matTooltip]="'Instance is ' + (socketService.instance.locked ? '' : 'un') + 'locked.'"
           [disabled]="socketService.instance.owner !== socketService.name"
           (click)="onLockPress()">
