@@ -29,6 +29,7 @@ import { EmojiDialogComponent, StatementComponent } from './statement/statement.
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PdfPrinterComponent } from './pdf-printer.component';
 
 
 // const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
@@ -44,6 +45,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     WriteDialogComponent,
     StatementComponent,
     EmojiDialogComponent,
+    PdfPrinterComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +78,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     CreateDialogComponent,
     WriteDialogComponent,
     EmojiDialogComponent,
+    PdfPrinterComponent,
   ]
 })
 export class AppModule { }

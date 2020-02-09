@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from './socket.service';
-import {inspect} from 'util';
+import { MatDialog } from '@angular/material';
+import { PdfPrinterComponent } from './pdf-printer.component';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {inspect} from 'util';
 export class AppComponent {
 
   constructor(
-    public socketService: SocketService
+    public socketService: SocketService,
+    private dialog: MatDialog,
   ) {}
 
   onLockPress() {
@@ -76,5 +78,9 @@ export class AppComponent {
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
+  }
+
+  downloadPDF() {
+    this.dialog.open(PdfPrinterComponent, { width: '2000px'});
   }
 }

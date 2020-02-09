@@ -18,8 +18,7 @@
         </mat-chip>
         <mat-menu #download>
           <button (click)="downloadCSV()" mat-menu-item>CSV</button>
-          <button mat-menu-item disabled>PDF coming soon</button>
-          <button mat-menu-item disabled>DOC coming soon</button>
+          <button (click)="downloadPDF()" mat-menu-item>PDF</button>
         </mat-menu>
 
         <mat-chip

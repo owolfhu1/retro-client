@@ -425,6 +425,9 @@ indexof
 isarray
 MIT
 
+jspdf
+MIT
+
 ms
 MIT
 The MIT License (MIT)
