@@ -32,8 +32,8 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PdfPrinterComponent } from './pdf-printer.component';
 
 
-// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+// const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
