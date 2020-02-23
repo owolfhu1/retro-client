@@ -1,7 +1,7 @@
 <mat-card *ngIf="!socketService.name">
 
   <mat-form-field>
-    <input matInput placeholder="name" [(ngModel)]="nameInput">
+    <input matInput placeholder="name" (keyup.enter)="join()" [(ngModel)]="nameInput">
   </mat-form-field>
   <br>
   <button mat-raised-button color="accent" (click)="join()">join</button>

@@ -30,7 +30,7 @@ export class AppComponent {
       if (obj.emoji) {
         const strings = [];
         obj.emoji.forEach(emoji => {
-          strings.push(`(${emoji.emoji} - ${emoji.names.join('/')})`);
+          strings.push(`(${emoji.emoji.native} - ${emoji.names.join('/')})`);
         });
         arr.push(strings.join(' '));
       }

@@ -10,19 +10,22 @@ import * as jsPDF from 'jspdf';
         <div>
             <h1>Went Well</h1>
             <div *ngFor="let statement of socketService.instance.goods">
-                <h3>{{ statement.text }}</h3>
-                <p>
-                    upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                </p>
+                <b>{{ statement.text }}</b><br>
+                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+                <span *ngFor="let e of statement.emoji">
+                    <br>
+                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                </span>
                 <ul *ngIf="statement.comments.length">
                     <li *ngFor="let comment of statement.comments">
-                        {{ comment.text }}
-                        <p>
-                            upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        </p>
+                        <b>{{ comment.text }}</b><br>
+                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+                        <span *ngFor="let e of comment.emoji">
+                            <br>
+                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                        </span>
                     </li>
                 </ul>
-                <br *ngIf="!statement.comments.length">
                 <br *ngIf="!statement.comments.length">
             </div>
         </div>
@@ -30,19 +33,22 @@ import * as jsPDF from 'jspdf';
         <div>
             <h1>Not Well</h1>
             <div *ngFor="let statement of socketService.instance.bads">
-                <h3>{{ statement.text }}</h3>
-                <p>
-                    upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                </p>
+                <b>{{ statement.text }}</b><br>
+                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+                <span *ngFor="let e of statement.emoji">
+                    <br>
+                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                </span>
                 <ul *ngIf="statement.comments.length">
                     <li *ngFor="let comment of statement.comments">
-                        {{ comment.text }}
-                        <p>
-                            upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        </p>
+                        <b>{{ comment.text }}</b><br>
+                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+                        <span *ngFor="let e of comment.emoji">
+                            <br>
+                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                        </span>
                     </li>
                 </ul>
-                <br *ngIf="!statement.comments.length">
                 <br *ngIf="!statement.comments.length">
             </div>
         </div>
@@ -50,19 +56,22 @@ import * as jsPDF from 'jspdf';
         <div>
             <h1>Actions</h1>
             <div *ngFor="let statement of socketService.instance.actions">
-                <h3>{{ statement.text }}</h3>
-                <p>
-                    upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                </p>
+                <b>{{ statement.text }}</b><br>
+                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+                <span *ngFor="let e of statement.emoji">
+                    <br>
+                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                </span>
                 <ul *ngIf="statement.comments.length">
                     <li *ngFor="let comment of statement.comments">
-                        {{ comment.text }}
-                        <p>
-                            upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        </p>
+                        <b>{{ comment.text }}</b><br>
+                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+                        <span *ngFor="let e of comment.emoji">
+                            <br>
+                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                        </span>
                     </li>
                 </ul>
-                <br *ngIf="!statement.comments.length">
                 <br *ngIf="!statement.comments.length">
             </div>
         </div>
@@ -70,19 +79,22 @@ import * as jsPDF from 'jspdf';
         <div>
             <h1>Trash</h1>
             <div *ngFor="let statement of socketService.instance.trash">
-                <h3>{{ statement.text }}</h3>
-                <p>
-                    upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                </p>
+                <b>{{ statement.text }}</b><br>
+                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+                <span *ngFor="let e of statement.emoji">
+                    <br>
+                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                </span>
                 <ul *ngIf="statement.comments.length">
                     <li *ngFor="let comment of statement.comments">
-                        {{ comment.text }}
-                        <p>
-                            upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        </p>
+                        <b>{{ comment.text }}</b><br>
+                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+                        <span *ngFor="let e of comment.emoji">
+                            <br>
+                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+                        </span>
                     </li>
                 </ul>
-                <br *ngIf="!statement.comments.length">
                 <br *ngIf="!statement.comments.length">
             </div>
         </div>

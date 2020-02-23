@@ -75,7 +75,7 @@
     [matTooltip]="obj.names.join(', ')"
     [matBadge]="obj.names.length === 1 ? null : obj.names.length"
     (click)="emoji(obj.emoji)">
-    <ngx-emoji set="facebook" [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>
+    <ngx-emoji set="facebook" [emoji]="obj.emoji.colons" tooltip="true" size="30"></ngx-emoji>
   </mat-chip>
 </mat-chip-list>
 
@@ -156,7 +156,7 @@
       [matTooltip]="obj.names.join(', ')"
       [matBadge]="obj.names.length === 1 ? null : obj.names.length"
       (click)="commentEmoji(comment.id, obj.emoji)">
-      <ngx-emoji set="facebook" [emoji]="obj.emoji" tooltip="true" size="30"></ngx-emoji>
+      <ngx-emoji set="facebook" [emoji]="obj.emoji.colons" tooltip="true" size="30"></ngx-emoji>
     </mat-chip>
   </mat-chip-list>
 </mat-card>
