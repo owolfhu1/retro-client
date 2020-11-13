@@ -84,4 +84,5 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
 export class AppModule { }
 
 // ng build --prod --output-path docs --base-href /retro-client/
+// make a copy of docs/index.html and name it docs/404.html.
 // https://owolfhu1.github.io/retro-client
