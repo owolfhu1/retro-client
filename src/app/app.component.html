@@ -3,13 +3,31 @@
   <mat-toolbar color="primary">
     <mat-toolbar-row>
 
+      <!-- left menu: title | votes left | ...online users  -->
       <mat-chip-list *ngIf="socketService.instance">
 
         <mat-chip color="primary" selected matTooltip="instance title"><h2>
           {{ socketService.instance.title }}
         </h2></mat-chip>
 
+        <mat-chip color="primary" selected>
+          <mat-icon matTooltip="votes left">how_to_vote</mat-icon>
+          {{ socketService.votesLeft }}
+        </mat-chip>
+
+        <mat-chip *ngFor="let user of socketService.instance.users">
+          <mat-icon matTooltip="self" *ngIf="socketService.name === user">account_circle</mat-icon>
+          <mat-icon matTooltip="instance owner" *ngIf="socketService.instance.owner === user">gavel</mat-icon>
+          {{ user }}
+        </mat-chip>
+
+      </mat-chip-list>
+
+      <!-- right menu: download | lock | delete | about -->
+      <mat-chip-list>
+
         <mat-chip
+          *ngIf="socketService.instance"
           color="primary"
           selected
           matTooltip="Download"
@@ -22,25 +40,29 @@
         </mat-menu>
 
         <mat-chip
+          *ngIf="socketService.instance"
           color="primary"
           selected
-          [matTooltip]="'Instance is ' + (socketService.instance.locked ? '' : 'un') + 'locked.'"
+          [matTooltip]="(!socketService.instance.locked ? '' : 'un') + 'lock instance'"
           [disabled]="socketService.instance.owner !== socketService.name"
           (click)="onLockPress()">
-          <mat-icon *ngIf="socketService.instance.locked">lock</mat-icon>
-          <mat-icon *ngIf="!socketService.instance.locked">lock_open</mat-icon>
+          <mat-icon>lock{{ socketService.instance.locked ? '' : '_open'}}</mat-icon>
         </mat-chip>
 
-
-        <mat-chip color="primary" selected>
-          <mat-icon matTooltip="votes left">how_to_vote</mat-icon>
-          {{ socketService.votesLeft }}
+        <mat-chip
+          *ngIf="socketService.instance"
+          color="primary"
+          [disabled]="socketService.instance.owner !== socketService.name"
+          (click)="delete()"
+          selected>
+          <mat-icon matTooltip="delete instance">delete</mat-icon>
         </mat-chip>
 
-        <mat-chip *ngFor="let user of socketService.instance.users">
-          <mat-icon matTooltip="self" *ngIf="socketService.name === user">account_circle</mat-icon>
-          <mat-icon matTooltip="instance owner" *ngIf="socketService.instance.owner === user">gavel</mat-icon>
-          {{ user }}
+        <mat-chip
+          color="primary"
+          (click)="about()"
+          selected>
+          <mat-icon matTooltip="about">new_releases</mat-icon>
         </mat-chip>
 
       </mat-chip-list>

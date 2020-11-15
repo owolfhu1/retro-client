@@ -49,15 +49,15 @@ export class CreateDialogComponent implements OnDestroy {
   }
 
   start() {
-    let title = this.title.replace(' ', '');
+    let title = (this.title || '').replace(' ', '');
     title = title.replace('?', '');
     title = title.replace('/', '');
     title = title.replace('=', '');
-    const owner = this.owner.replace(' ', '');
+    const owner = (this.owner || '').replace(' ', '');
     if (owner && title && this.likesAllowed > -1) {
       this.socketService.startInstance(title, this.likesAllowed, this.negativeVotesAllowed, owner, this.emojiAllowed);
     } else {
-      alert('please fill in all fields with letters');
+      this.socketService.systemMessage.next('please fill in all fields');
     }
   }
 

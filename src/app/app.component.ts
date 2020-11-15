@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { SocketService } from './socket.service';
-import { MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { PdfPrinterComponent } from './pdf-printer.component';
 
 @Component({
@@ -13,10 +13,57 @@ export class AppComponent {
   constructor(
     public socketService: SocketService,
     private dialog: MatDialog,
-  ) {}
+  ) {
+    socketService.socket.fromEvent<string>('test').subscribe(content => {
+      dialog.open(InfoDialogComponent, { data: { title: 'Server Message', content }, width: '600px' });
+    });
+    socketService.systemMessage.subscribe(content => {
+      dialog.open(InfoDialogComponent, { data: { title: 'Client Message', content }, width: '600px' });
+    });
+    socketService.socket.fromEvent<string>('deleted-instance').subscribe(() => {
+      this.dialog.open(InfoDialogComponent, {
+        data: {
+          title: 'Deleted Instance',
+          content: 'The instance you were viewing has been deleted.',
+        },
+        width: '600px',
+      }).afterClosed().subscribe(() => {
+        document.location.reload();
+      });
+    });
+  }
 
   onLockPress() {
-    this.socketService.emit('lock', null);
+    if (this.socketService.instance.owner === this.socketService.name) {
+      this.socketService.emit('lock', null);
+    }
+  }
+
+  about() {
+    this.dialog.open(InfoDialogComponent, {
+      data: {
+        title: 'Retrospective Application created by Orion Wolf-Hubbard',
+        content: 'Contact: owolfhu1@gmail.com',
+      },
+      width: '600px',
+    });
+  }
+
+  delete() {
+    if (this.socketService.instance.owner === this.socketService.name) {
+      this.dialog.open(InfoDialogComponent, {
+        data: {
+          title: 'Confirmation',
+          content: 'Are you sure you wish to permanently delete this instance?',
+          cancelable: true,
+        },
+        width: '600px',
+      }).afterClosed().subscribe(doDelete => {
+        if (doDelete) {
+          this.socketService.emit('delete-instance');
+        }
+      });
+    }
   }
 
   downloadCSV() {
@@ -82,5 +129,41 @@ export class AppComponent {
 
   downloadPDF() {
     this.dialog.open(PdfPrinterComponent, { width: '2000px'});
+  }
+}
+
+@Component({
+  selector: 'info-dialog',
+  template: `
+    <h3>{{ title }}</h3>
+    <p>{{ content }}</p>
+    <div class="right-buttons">
+        <button mat-fab color="warn" *ngIf="cancelable" (click)="close()">
+            <mat-icon>clear</mat-icon>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-fab color="primary" (click)="close(true)">
+            <mat-icon>check</mat-icon>
+        </button>
+    </div>
+  `,
+})
+export class InfoDialogComponent {
+  title: string;
+  content: string;
+  cancelable: boolean;
+
+  constructor(
+    public socketService: SocketService,
+    public dialogRef: MatDialogRef<InfoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    this.title = data.title;
+    this.content = data.content;
+    this.cancelable = data.cancelable;
+  }
+
+  close(yes = false) {
+    this.dialogRef.close(yes);
   }
 }

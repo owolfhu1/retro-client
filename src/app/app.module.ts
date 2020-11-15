@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, InfoDialogComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateComponent, CreateDialogComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
@@ -43,6 +43,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     CreateDialogComponent,
     InstanceComponent,
     WriteDialogComponent,
+    InfoDialogComponent,
     StatementComponent,
     EmojiDialogComponent,
     PdfPrinterComponent,
@@ -77,6 +78,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
   entryComponents: [
     CreateDialogComponent,
     WriteDialogComponent,
+    InfoDialogComponent,
     EmojiDialogComponent,
     PdfPrinterComponent,
   ]

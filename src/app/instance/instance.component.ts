@@ -26,7 +26,7 @@ export class InstanceComponent implements OnInit {
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.isPointerOverContainer) {
       if (this.socketService.disabled) {
-        alert('You can not edit a locked instance.');
+        this.socketService.systemMessage.next('You can not edit a locked instance.');
         return;
       }
       const lastIndex = event.previousIndex;
@@ -39,7 +39,7 @@ export class InstanceComponent implements OnInit {
         tempItem.author !== this.socketService.name &&
         this.socketService.instance.owner !== this.socketService.name
       ) {
-        alert('You may only move your own statements.');
+        this.socketService.systemMessage.next('You may only move your own statements.');
       } else {
         const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
         this.socketService.instance[nextList].splice(nextIndex, 0, item);
@@ -51,7 +51,7 @@ export class InstanceComponent implements OnInit {
   trash(event: CdkDragDrop<Statement[]> | any) {
     if (event.isPointerOverContainer || event.manual) {
       if (this.socketService.disabled) {
-        alert('You can not edit a locked instance.');
+        this.socketService.systemMessage.next('You can not edit a locked instance.');
         return;
       }
       const lastIndex = event.manual ? event.lastIndex : event.previousIndex;
@@ -63,7 +63,7 @@ export class InstanceComponent implements OnInit {
         tempItem.author !== this.socketService.name &&
         this.socketService.instance.owner !== this.socketService.name
       ) {
-        alert('You may only move your own statements.');
+        this.socketService.systemMessage.next('You may only move your own statements.');
       } else {
         const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
         this.socketService.instance.trash.splice(nextIndex, 0, item);
@@ -93,9 +93,9 @@ export class InstanceComponent implements OnInit {
       this.socketService.emit('delete', index);
     } else {
       if (item.author !== this.socketService.name) {
-        alert('You may only delete your own statements.');
+        this.socketService.systemMessage.next('You may only delete your own statements.');
       } else if (item.comments.length > 0) {
-        alert('Only the instance owner can delete statements with comments.');
+        this.socketService.systemMessage.next('Only the instance owner can delete statements with comments.');
       } else {
         this.socketService.emit('delete', index);
       }
@@ -158,7 +158,7 @@ export class WriteDialogComponent {
   }
   close(text) {
     if (this.socketService.instance.locked && this.socketService.instance.owner !== this.socketService.name) {
-      alert('You can not do that, the instance has been locked.');
+      this.socketService.systemMessage.next('You can not do that, the instance has been locked.');
       this.dialogRef.close();
     } else {
       this.dialogRef.close(text);
