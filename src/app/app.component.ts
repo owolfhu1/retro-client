@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { SocketService } from './socket.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { PdfPrinterComponent } from './pdf-printer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import { PdfPrinterComponent } from './pdf-printer.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  introMessage = `Welcome to Orion's retrospective application`;
 
   constructor(
     public socketService: SocketService,
     private dialog: MatDialog,
+    private router: Router,
   ) {
     socketService.socket.fromEvent<string>('test').subscribe(content => {
       dialog.open(InfoDialogComponent, { data: { title: 'Server Message', content }, width: '600px' });
@@ -30,6 +33,14 @@ export class AppComponent {
       }).afterClosed().subscribe(() => {
         document.location.reload();
       });
+    });
+
+    setTimeout(() => {
+      const index = router.url.split('/').indexOf('instance');
+      if (index > -1) {
+        this.introMessage = `Welcome to Orion's retrospective application, please enter a name to access instance "` +
+          router.url.split('/')[index + 1] + '"';
+      }
     });
   }
 

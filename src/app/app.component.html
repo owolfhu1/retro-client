@@ -23,6 +23,8 @@
 
       </mat-chip-list>
 
+      <h2 *ngIf="!socketService.instance">{{ introMessage }}</h2>
+
       <!-- right menu: download | lock | delete | about -->
       <mat-chip-list>
 
