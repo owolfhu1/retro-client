@@ -110,3 +110,12 @@ mat-card {
 .bad {
   background: darkred;
 }
+
+.login-wrapper {
+  width: 500px;
+  margin: auto;
+}
+
+.login {
+  padding: 60px;
+}

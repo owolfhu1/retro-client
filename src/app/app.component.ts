@@ -1,8 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { SocketService } from './socket.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { PdfPrinterComponent } from './pdf-printer.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  introMessage = `Welcome to Orion's retrospective application`;
+  introMessage = `Welcome to Orion's retrospective application.`;
 
   constructor(
     public socketService: SocketService,
     private dialog: MatDialog,
-    private router: Router,
   ) {
     socketService.socket.fromEvent<string>('test').subscribe(content => {
       dialog.open(InfoDialogComponent, { data: { title: 'Server Message', content }, width: '600px' });
@@ -33,14 +31,6 @@ export class AppComponent {
       }).afterClosed().subscribe(() => {
         document.location.reload();
       });
-    });
-
-    setTimeout(() => {
-      const index = router.url.split('/').indexOf('instance');
-      if (index > -1) {
-        this.introMessage = `Welcome to Orion's retrospective application, please enter a name to access instance "` +
-          router.url.split('/')[index + 1] + '"';
-      }
     });
   }
 
@@ -71,10 +61,22 @@ export class AppComponent {
         width: '600px',
       }).afterClosed().subscribe(doDelete => {
         if (doDelete) {
-          this.socketService.emit('delete-instance');
+          if (this.socketService.instance.title === 'demo') {
+            this.dialog.open(InfoDialogComponent, {
+              data: {
+                title: 'Sorry',
+                content: 'You can not delete the demo instance.',
+              },
+              width: '600px',
+            });
+          } else { this.socketService.emit('delete-instance'); };
         }
       });
     }
+  }
+
+  newInstance() {
+    window.location.href = 'https://owolfhu1.github.io/retro-client/create';
   }
 
   downloadCSV() {

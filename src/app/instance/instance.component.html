@@ -1,12 +1,17 @@
-<mat-card *ngIf="!socketService.name">
 
-  <mat-form-field>
-    <input matInput placeholder="name" (keyup.enter)="join()" [(ngModel)]="nameInput">
-  </mat-form-field>
-  <br>
-  <button mat-raised-button color="accent" (click)="join()">join</button>
+<div *ngIf="!socketService.name" class="login-wrapper">
+  <mat-card class="login">
 
-</mat-card>
+    <p>Please enter a name to join instance "{{ title }}"</p>
+
+    <mat-form-field>
+      <input matInput placeholder="name" (keyup.enter)="join()" [(ngModel)]="nameInput">
+    </mat-form-field>
+    &nbsp;
+    <button mat-raised-button color="accent" (click)="join()">join</button>
+
+  </mat-card>
+</div>
 
 <div *ngIf="socketService.instance && socketService.name" class="board" cdkDropListGroup>
   <mat-card class="section" id="goods-color">
@@ -19,7 +24,7 @@
       id="goods"
       itemSize="1"
       class="section-body">
-      <mat-card class="good" *cdkVirtualFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
+      <mat-card class="good" *ngFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
         <app-statement
           [statement]="statement"
           (trashStatement)="trash({ lastIndex: i, lastList: 'goods', manual: true })">
@@ -48,7 +53,7 @@
       id="bads"
       itemSize="1"
       class="section-body">
-      <mat-card class="bad" *cdkVirtualFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
+      <mat-card class="bad" *ngFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
         <app-statement
           [statement]="statement"
           (trashStatement)="trash({ lastIndex: i, lastList: 'bads', manual: true })">
@@ -77,7 +82,7 @@
       id="actions"
       itemSize="1"
       class="section-body">
-      <mat-card class="action" *cdkVirtualFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
+      <mat-card class="action" *ngFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
         <app-statement
           [statement]="statement"
           (trashStatement)="trash({ lastIndex: i, lastList: 'actions', manual: true })">
@@ -107,7 +112,7 @@
       (cdkDropListDropped)="trash($event)">
       <div
         [ngClass]="trashClass(junk)"
-        *cdkVirtualFor="let junk of socketService.instance.trash; let i = index"
+        *ngFor="let junk of socketService.instance.trash; let i = index"
         cdkDrag>
         <button
           class="delete-button"

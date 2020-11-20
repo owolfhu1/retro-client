@@ -25,7 +25,7 @@
 
       <h2 *ngIf="!socketService.instance">{{ introMessage }}</h2>
 
-      <!-- right menu: download | lock | delete | about -->
+      <!-- right menu: download | lock | delete | create | about -->
       <mat-chip-list>
 
         <mat-chip
@@ -58,6 +58,13 @@
           (click)="delete()"
           selected>
           <mat-icon matTooltip="delete instance">delete</mat-icon>
+        </mat-chip>
+
+        <mat-chip
+          color="primary"
+          (click)="newInstance()"
+          selected>
+          <mat-icon matTooltip="create a new instance">addchart</mat-icon>
         </mat-chip>
 
         <mat-chip
