@@ -12,6 +12,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 export class InstanceComponent implements OnInit {
   nameInput = '';
   title = '';
+  minimizeTrash = false;
 
   constructor(
     public socketService: SocketService,

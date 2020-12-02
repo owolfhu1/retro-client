@@ -102,9 +102,10 @@
   </mat-card>
 
 
-  <mat-card class="trash" cdkDrag>
+  <mat-card [ngClass]="{ 'min-trash': minimizeTrash, 'trash': !minimizeTrash }" cdkDrag>
     <cdk-virtual-scroll-viewport
       class="trash-body"
+      *ngIf="!minimizeTrash"
       cdkDropList
       id="trash"
       [cdkDropListData]="socketService.instance.trash"
@@ -128,14 +129,23 @@
     </cdk-virtual-scroll-viewport>
 
     <mat-icon
-      *ngIf="socketService.instance.owner === socketService.name && !socketService.instance.trashIsLocked"
+      *ngIf="socketService.instance.owner === socketService.name && !socketService.instance.trashIsLocked && !minimizeTrash"
       matTooltip="delete all"
-      class="left-corner-button"
+      class="trash-all-button"
       color="warn"
       (click)="deleteAll()">
       delete_forever
     </mat-icon>
+
     <mat-icon
+      [matTooltip]="minimizeTrash ? 'restore' : 'minimize'"
+      class="resize-button"
+      (click)="minimizeTrash = !minimizeTrash">
+      {{ minimizeTrash ? 'add' : 'remove' }}
+    </mat-icon>
+
+    <mat-icon
+      *ngIf="!minimizeTrash"
       [color]="socketService.instance.trashIsLocked ? 'warn' : 'accent'"
       (click)="socketService.emit('lock-trash', null)"
       [matTooltip]="'Trash is ' + (socketService.instance.trashIsLocked ? '' : 'un') + 'locked.'"
