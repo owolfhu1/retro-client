@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {SocketService} from '../socket.service';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { SocketService } from '../socket.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-create',
@@ -15,7 +15,7 @@ export class CreateComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
-    setTimeout(() => this.dialog.open(CreateDialogComponent, { width: '230px', disableClose: true }));
+    setTimeout(() => this.dialog.open(CreateDialogComponent, { width: '340px', disableClose: true }));
   }
 
 }
@@ -33,6 +33,22 @@ export class CreateDialogComponent implements OnDestroy {
   owner;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
+  colors = [
+    'green',
+    'blue',
+    'purple',
+    'darkred',
+    'orangered',
+    'yellowgreen',
+    'deeppink',
+  ];
+
+  columns = [
+    { text: 'went well', color: 'green' },
+    { text: 'not well', color: 'darkred' },
+    { text: 'action items', color: 'orangered' },
+  ];
+
   constructor(
     public dialogRef: MatDialogRef<CreateDialogComponent>,
     private router: Router,
@@ -48,13 +64,26 @@ export class CreateDialogComponent implements OnDestroy {
       });
   }
 
+  drop(event) {
+    this.columns.splice(event.currentIndex, 0, this.columns.splice(event.previousIndex, 1)[0]);
+  }
+
+  del(index) {
+    this.columns.splice(index, 1);
+  }
+
+  setColor(color, index) {
+    this.columns[index].color = color;
+  }
+
   start() {
-    let title = (this.title || '').replace(' ', '');
-    title = title.replace('?', '');
-    title = title.replace('/', '');
-    title = title.replace('=', '');
+    const title = (this.title || '').replace(' ', '').replace('?', '').replace('/', '').replace('=', '');
     const owner = (this.owner || '').replace(' ', '');
-    if (owner && title && this.likesAllowed > -1) {
+
+    Array.from(document.getElementsByClassName('col-input'))
+      .forEach((input, index) => this.columns[index].text = input['value']);
+
+    if (owner && title && this.likesAllowed > -1 && this.columns.filter(col => !col.text).length === 0) {
       this.socketService.startInstance(title, this.likesAllowed, this.negativeVotesAllowed, owner, this.emojiAllowed);
     } else {
       this.socketService.systemMessage.next('please fill in all fields');

@@ -1,0 +1,25 @@
+
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*.one { height: 90px; }*/
+/*.two { height: 180px; }*/
+/*.three { height: 270px; }*/
+/*.four { height: 360px; }*/
+
+mat-form-field {
+  width: 100%;
+}
+
+.dropdown {
+  margin-right: 5px;
+}
+
+.col-input {
+  padding-left: 5px;
+  border-radius: 5px;
+}
