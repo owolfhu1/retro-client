@@ -12,9 +12,9 @@
   <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
 </mat-form-field>
 
-<mat-checkbox [(ngModel)]="negativeVotesAllowed">Allow Negative Votes</mat-checkbox>
+<mat-checkbox [(ngModel)]="negativeVotesAllowed">Negative Votes</mat-checkbox> &nbsp;&nbsp;
 
-<mat-checkbox [(ngModel)]="emojiAllowed">Allow Emoji Reactions</mat-checkbox>
+<mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
 
 <div class="columns">
   <h4>Columns</h4>
@@ -22,7 +22,7 @@
   <button
     matTooltip="Add Column"
     mat-icon-button
-    [disabled]="columns.length > 3"
+    [disabled]="columns.length > 4"
     (click)="columns.push({ color: 'green', text: '' })"
     class="corner-button">
     <mat-icon>add</mat-icon>
@@ -34,11 +34,10 @@
   [cdkDropListData]="columns"
   (cdkDropListDropped)="drop($event)"
   itemSize="1"
-  [style.height]="(90 * columns.length) + 'px'"
+  [style.height]="(102 * columns.length) + 'px'"
 >
   <mat-form-field color="accent" appearance="outline" *ngFor="let column of columns; let i = index" cdkDrag>
-    <mat-label [style.border-radius]="'5px'" [style.background]="column.text ? '' : column.color">Column #{{ i + 1 }}</mat-label>
-    <input [style.background]="column.text ? column.color : ''" class="col-input" matInput [(ngModel)]="column.text">
+    <input [style.border]="border(column.color) + ' solid 4px'" [style.background]="column.color" class="col-input" matInput [(ngModel)]="column.text">
 
     <button matPrefix mat-icon-button [matMenuTriggerFor]="menu" matTooltip="pick a color">
       <mat-icon>keyboard_arrow_down</mat-icon>
@@ -47,7 +46,7 @@
       <button (click)="setColor(color, i)" mat-menu-item *ngFor="let color of colors" [style.background]="color">{{ color }}</button>
     </mat-menu>
 
-    <button mat-icon-button matSuffix matTooltip="delete column" [disabled]="columns.length < 2" (click)="del(i)">
+    <button [style.margin-left]="'15px'" mat-icon-button matSuffix matTooltip="delete column" [disabled]="columns.length < 2" (click)="del(i)">
       <mat-icon>remove</mat-icon>
     </button>
   </mat-form-field>

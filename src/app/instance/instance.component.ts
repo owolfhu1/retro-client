@@ -3,6 +3,7 @@ import {SocketService} from '../socket.service';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {debug} from 'util';
 
 @Component({
   selector: 'app-instance',
@@ -34,7 +35,9 @@ export class InstanceComponent implements OnInit {
       const nextIndex = event.currentIndex;
       const lastList = event.previousContainer.id;
       const nextList = event.container.id;
-      const tempItem = this.socketService.instance[lastList][lastIndex];
+      const tempItem = lastList === 'trash' ?
+        this.socketService.instance[lastList][lastIndex] :
+        this.socketService.instance.columns[lastList].items[lastIndex];
       const id = tempItem.id;
       if (
         tempItem.author !== this.socketService.name &&
@@ -42,8 +45,10 @@ export class InstanceComponent implements OnInit {
       ) {
         this.socketService.systemMessage.next('You may only move your own statements.');
       } else {
-        const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
-        this.socketService.instance[nextList].splice(nextIndex, 0, item);
+        const item = (lastList === 'trash' ?
+          this.socketService.instance[lastList] :
+          this.socketService.instance.columns[lastList].items).splice(lastIndex, 1)[0];
+        this.socketService.instance.columns[nextList].items.splice(nextIndex, 0, item);
         this.socketService.emit('drop', { lastIndex, nextIndex, lastList, nextList, id });
       }
     }
@@ -58,7 +63,9 @@ export class InstanceComponent implements OnInit {
       const lastIndex = event.manual ? event.lastIndex : event.previousIndex;
       const nextIndex = event.manual ? null : event.currentIndex;
       const lastList = event.manual ? event.lastList : event.previousContainer.id;
-      const tempItem = this.socketService.instance[lastList][lastIndex];
+      const tempItem = lastList === 'trash' ?
+        this.socketService.instance[lastList][lastIndex] :
+        this.socketService.instance.columns[lastList].items[lastIndex];
       const id = tempItem.id;
       if (
         tempItem.author !== this.socketService.name &&
@@ -66,20 +73,18 @@ export class InstanceComponent implements OnInit {
       ) {
         this.socketService.systemMessage.next('You may only move your own statements.');
       } else {
-        const item = this.socketService.instance[lastList].splice(lastIndex, 1)[0];
+        const item = (lastList === 'trash' ?
+          this.socketService.instance[lastList] :
+          this.socketService.instance.columns[lastList].items).splice(lastIndex, 1)[0];
+        item.from = lastList;
         this.socketService.instance.trash.splice(nextIndex, 0, item);
         this.socketService.emit('trash', { lastIndex, nextIndex, lastList, id });
       }
     }
   }
 
-  trashClass(junk) {
-    return {
-      'trash-object': true,
-      good: junk.from === 'goods',
-      bad: junk.from === 'bads',
-      action: junk.from === 'actions'
-    };
+  trashColor(junk) {
+    return this.socketService.instance.columns[junk.from].color;
   }
 
   canDelete(index): boolean {
@@ -117,13 +122,26 @@ export class InstanceComponent implements OnInit {
     this.dialog.open(WriteDialogComponent, { width: '300px' })
       .afterClosed().subscribe(value => {
         if (value) {
-          this.socketService.emit('new-' + type, value);
+          this.socketService.emit('new-statement', { type, value });
         }
     });
   }
 
   displayJunk (junk) {
     return junk.text.substring(0, 10);
+  }
+
+  background(main) {
+    switch (main) {
+      case 'green' : return 'lightgreen';
+      case 'blue' : return 'cornflowerblue';
+      case 'purple' : return 'mediumpurple';
+      case 'darkred' : return 'lightcoral';
+      case 'orangered' : return 'orange';
+      case 'yellowgreen' : return 'yellow';
+      case 'deeppink' : return 'pink';
+      case 'gray' : return 'lightgray';
+    }
   }
 }
 

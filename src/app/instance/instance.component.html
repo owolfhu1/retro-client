@@ -14,20 +14,25 @@
 </div>
 
 <div *ngIf="socketService.instance && socketService.name" class="board" cdkDropListGroup>
-  <mat-card class="section" id="goods-color">
-    <h1 class="center">Went Well</h1>
+
+  <mat-card
+    *ngFor="let column of socketService.instance.columns; let colIndex = index"
+    [style.background]="background(column.color)"
+    class="section"
+    >
+    <h1 class="center">{{ column.text }}</h1>
 
     <cdk-virtual-scroll-viewport
       cdkDropList
-      [cdkDropListData]="socketService.instance.goods"
+      [cdkDropListData]="column.items"
       (cdkDropListDropped)="drop($event)"
-      id="goods"
+      [id]="colIndex"
       itemSize="1"
-      class="section-body">
-      <mat-card class="good" *ngFor="let statement of socketService.instance.goods; let i = index" cdkDrag>
+      class="section-body hide-scroll">
+      <mat-card [style.background]="column.color" *ngFor="let statement of column.items; let i = index" cdkDrag>
         <app-statement
           [statement]="statement"
-          (trashStatement)="trash({ lastIndex: i, lastList: 'goods', manual: true })">
+          (trashStatement)="trash({ lastIndex: i, lastList: colIndex, manual: true })">
         </app-statement>
       </mat-card>
     </cdk-virtual-scroll-viewport>
@@ -38,73 +43,14 @@
       class="corner-button"
       color="accent"
       [disabled]="socketService.disabled"
-      (click)="write('goods')">
+      (click)="write(column.text)">
       <mat-icon>create</mat-icon>
     </button>
   </mat-card>
-
-  <mat-card class="section" id="bads-color">
-    <h1 class="center">Not Well</h1>
-
-    <cdk-virtual-scroll-viewport
-      cdkDropList
-      [cdkDropListData]="socketService.instance.bads"
-      (cdkDropListDropped)="drop($event)"
-      id="bads"
-      itemSize="1"
-      class="section-body">
-      <mat-card class="bad" *ngFor="let statement of socketService.instance.bads; let i = index" cdkDrag>
-        <app-statement
-          [statement]="statement"
-          (trashStatement)="trash({ lastIndex: i, lastList: 'bads', manual: true })">
-        </app-statement>
-      </mat-card>
-    </cdk-virtual-scroll-viewport>
-
-    <button
-      matTooltip="write statement"
-      mat-fab
-      class="corner-button"
-      color="accent"
-      [disabled]="socketService.disabled"
-      (click)="write('bads')">
-      <mat-icon>create</mat-icon>
-    </button>
-  </mat-card>
-
-  <mat-card class="section" id="actions-color">
-    <h1 class="center">Action Items</h1>
-
-    <cdk-virtual-scroll-viewport
-      cdkDropList
-      [cdkDropListData]="socketService.instance.actions"
-      (cdkDropListDropped)="drop($event)"
-      id="actions"
-      itemSize="1"
-      class="section-body">
-      <mat-card class="action" *ngFor="let statement of socketService.instance.actions; let i = index" cdkDrag>
-        <app-statement
-          [statement]="statement"
-          (trashStatement)="trash({ lastIndex: i, lastList: 'actions', manual: true })">
-        </app-statement>
-      </mat-card>
-    </cdk-virtual-scroll-viewport>
-
-    <button
-      matTooltip="write statement"
-      mat-fab
-      class="corner-button"
-      color="accent"
-      [disabled]="socketService.disabled"
-      (click)="write('actions')">
-      <mat-icon>create</mat-icon>
-    </button>
-  </mat-card>
-
 
   <mat-card [ngClass]="{ 'min-trash': minimizeTrash, 'trash': !minimizeTrash }" cdkDrag>
     <cdk-virtual-scroll-viewport
-      class="trash-body"
+      class="trash-body hide-scroll"
       *ngIf="!minimizeTrash"
       cdkDropList
       id="trash"
@@ -112,7 +58,8 @@
       itemSize="1"
       (cdkDropListDropped)="trash($event)">
       <div
-        [ngClass]="trashClass(junk)"
+        class="trash-object"
+        [style.background]="trashColor(junk)"
         *ngFor="let junk of socketService.instance.trash; let i = index"
         cdkDrag>
         <button

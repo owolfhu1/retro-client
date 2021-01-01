@@ -15,7 +15,7 @@ export class CreateComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
-    setTimeout(() => this.dialog.open(CreateDialogComponent, { width: '340px', disableClose: true }));
+    setTimeout(() => this.dialog.open(CreateDialogComponent, { width: '370px', disableClose: true }));
   }
 
 }
@@ -26,6 +26,21 @@ export class CreateComponent implements OnInit {
   styleUrls: ['./create.component.css']
 })
 export class CreateDialogComponent implements OnDestroy {
+
+  constructor(
+    public dialogRef: MatDialogRef<CreateDialogComponent>,
+    private router: Router,
+    private socketService: SocketService
+  ) {
+    socketService.goToInstance
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.socketService.name = data.name;
+        this.socketService.instance = data.instance;
+        this.dialogRef.close();
+        router.navigate(['/instance', data.instance.title ]);
+      });
+  }
   likesAllowed = 20;
   negativeVotesAllowed = true;
   emojiAllowed = true;
@@ -41,6 +56,7 @@ export class CreateDialogComponent implements OnDestroy {
     'orangered',
     'yellowgreen',
     'deeppink',
+    'gray',
   ];
 
   columns = [
@@ -49,19 +65,17 @@ export class CreateDialogComponent implements OnDestroy {
     { text: 'action items', color: 'orangered' },
   ];
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateDialogComponent>,
-    private router: Router,
-    private socketService: SocketService
-  ) {
-    socketService.goToInstance
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => {
-        this.socketService.name = data.name;
-        this.socketService.instance = data.instance;
-        this.dialogRef.close();
-        router.navigate(['/instance', data.instance.title ]);
-      });
+  border(main) {
+    switch (main) {
+      case 'green' : return 'lightgreen';
+      case 'blue' : return 'cornflowerblue';
+      case 'purple' : return 'mediumpurple';
+      case 'darkred' : return 'lightcoral';
+      case 'orangered' : return 'orange';
+      case 'yellowgreen' : return 'yellow';
+      case 'deeppink' : return 'pink';
+      case 'gray' : return 'lightgray';
+    }
   }
 
   drop(event) {
@@ -83,8 +97,11 @@ export class CreateDialogComponent implements OnDestroy {
     Array.from(document.getElementsByClassName('col-input'))
       .forEach((input, index) => this.columns[index].text = input['value']);
 
-    if (owner && title && this.likesAllowed > -1 && this.columns.filter(col => !col.text).length === 0) {
-      this.socketService.startInstance(title, this.likesAllowed, this.negativeVotesAllowed, owner, this.emojiAllowed);
+    const textOnly = this.columns.map(item => item.text);
+    if ((new Set(textOnly)).size !== textOnly.length) {
+      this.socketService.systemMessage.next('please give columns unique names');
+    } else if (owner && title && this.likesAllowed > -1 && this.columns.filter(col => !col.text).length === 0) {
+      this.socketService.startInstance(title, this.likesAllowed, this.negativeVotesAllowed, owner, this.emojiAllowed, this.columns);
     } else {
       this.socketService.systemMessage.next('please fill in all fields');
     }
