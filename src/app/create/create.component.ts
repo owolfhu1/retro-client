@@ -136,8 +136,12 @@ export class CreateDialogComponent implements OnDestroy {
   }
 
   copy() {
-    navigator.clipboard.writeText(this.url).then(res => {
-      alert(this.url + ' copied');
+    navigator.permissions.query({name: 'clipboard-write'} as any).then(result => {
+      if (result.state === 'granted' || result.state === 'prompt') {
+        navigator.clipboard.writeText(this.url).then(() => {
+          alert(this.url + ' copied');
+        });
+      }
     });
   }
 
