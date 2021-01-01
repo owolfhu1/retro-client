@@ -20,7 +20,7 @@
     [style.background]="background(column.color)"
     class="section"
     >
-    <h1 class="center">{{ column.text }}</h1>
+    <h1 class="center"><mat-icon class="col-icon" *ngIf="column.icon">{{ column.icon }}</mat-icon>{{ column.text }}</h1>
 
     <cdk-virtual-scroll-viewport
       cdkDropList

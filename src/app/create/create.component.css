@@ -15,4 +15,40 @@ mat-form-field {
 .col-input {
   padding: 3px 3px 3px 5px;
   border-radius: 10px;
+  width: 290px;
+}
+
+.options-wrapper {
+  width: 125px;
+  display: flex;
+}
+
+cdk-virtual-scroll-viewport::ng-deep.mat-form-field-infix {
+  border-top: 0;
+  padding-top: 20px;
+}
+
+cdk-virtual-scroll-viewport::ng-deep.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+pre {
+  border: gray solid 2px;
+  background: darkgrey;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #303030;
+  user-select: all;
+  margin: 0;
+}
+
+pre:hover {
+  border: #373737 solid 2px;
+  color: #111111;
+  background: #c2c2c2;
+}
+
+h1 {
+  margin: 0 5px 5px;
 }
