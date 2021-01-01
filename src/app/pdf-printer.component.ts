@@ -7,97 +7,52 @@ import * as jsPDF from 'jspdf';
   selector: 'pdf-dialog',
   template: `
     <div #content>
-        <div>
-            <h1>Went Well</h1>
-            <div *ngFor="let statement of socketService.instance.goods">
-                <b>{{ statement.text }}</b><br>
-                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                <span *ngFor="let e of statement.emoji">
-                    <br>
-                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                </span>
-                <ul *ngIf="statement.comments.length">
-                    <li *ngFor="let comment of statement.comments">
-                        <b>{{ comment.text }}</b><br>
-                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        <span *ngFor="let e of comment.emoji">
-                            <br>
-                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                        </span>
-                    </li>
-                </ul>
-                <br *ngIf="!statement.comments.length">
-            </div>
-        </div>
 
-        <div>
-            <h1>Not Well</h1>
-            <div *ngFor="let statement of socketService.instance.bads">
-                <b>{{ statement.text }}</b><br>
-                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                <span *ngFor="let e of statement.emoji">
-                    <br>
-                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                </span>
-                <ul *ngIf="statement.comments.length">
-                    <li *ngFor="let comment of statement.comments">
-                        <b>{{ comment.text }}</b><br>
-                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        <span *ngFor="let e of comment.emoji">
-                            <br>
-                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                        </span>
-                    </li>
-                </ul>
-                <br *ngIf="!statement.comments.length">
-            </div>
+      <div *ngFor="let col of socketService.instance.columns">
+        <h1>{{ col.text }}</h1>
+        <div *ngFor="let statement of col.items">
+          <b>{{ statement.text }}</b><br>
+          upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+          <span *ngFor="let e of statement.emoji">
+            <br>
+            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+          </span>
+          <ul *ngIf="statement.comments.length">
+            <li *ngFor="let comment of statement.comments">
+              <b>{{ comment.text }}</b><br>
+              upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+              <span *ngFor="let e of comment.emoji">
+                <br>
+                <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+              </span>
+            </li>
+          </ul>
+          <br *ngIf="!statement.comments.length">
         </div>
+      </div>
 
-        <div>
-            <h1>Actions</h1>
-            <div *ngFor="let statement of socketService.instance.actions">
-                <b>{{ statement.text }}</b><br>
-                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                <span *ngFor="let e of statement.emoji">
-                    <br>
-                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                </span>
-                <ul *ngIf="statement.comments.length">
-                    <li *ngFor="let comment of statement.comments">
-                        <b>{{ comment.text }}</b><br>
-                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        <span *ngFor="let e of comment.emoji">
-                            <br>
-                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                        </span>
-                    </li>
-                </ul>
-                <br *ngIf="!statement.comments.length">
-            </div>
+      <div>
+        <h1>Trash</h1>
+        <div *ngFor="let statement of socketService.instance.trash">
+          <b>{{ statement.text }}</b><br>
+          upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
+          <span *ngFor="let e of statement.emoji">
+            <br>
+            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+          </span>
+          <ul *ngIf="statement.comments.length">
+            <li *ngFor="let comment of statement.comments">
+              <b>{{ comment.text }}</b><br>
+              upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
+              <span *ngFor="let e of comment.emoji">
+                <br>
+                <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
+              </span>
+            </li>
+          </ul>
+          <br *ngIf="!statement.comments.length">
         </div>
-
-        <div>
-            <h1>Trash</h1>
-            <div *ngFor="let statement of socketService.instance.trash">
-                <b>{{ statement.text }}</b><br>
-                upvotes: {{ statement.ups.length }}, downvotes: {{ statement.downs.length }}
-                <span *ngFor="let e of statement.emoji">
-                    <br>
-                    <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                </span>
-                <ul *ngIf="statement.comments.length">
-                    <li *ngFor="let comment of statement.comments">
-                        <b>{{ comment.text }}</b><br>
-                        upvotes: {{ comment.ups.length }}, downvotes: {{ comment.downs.length }}
-                        <span *ngFor="let e of comment.emoji">
-                            <br>
-                            <small><small>{{ e.emoji.colons }} - {{ e.names.join(', ') }}</small></small>
-                        </span>
-                    </li>
-                </ul>
-                <br *ngIf="!statement.comments.length">
-            </div>
-        </div>
+      </div>
     </div>
   `,
 })

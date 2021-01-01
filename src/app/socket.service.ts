@@ -39,8 +39,8 @@ export class SocketService {
     setInterval(() => this.emit('ping', 'stay alive'), 600000);
   }
 
-  startInstance(title, votesAllowed, negativeVotesAllowed, owner, emojiAllowed) {
-    this.socket.emit('start', { title, votesAllowed, negativeVotesAllowed, owner, emojiAllowed });
+  startInstance(title, votesAllowed, negativeVotesAllowed, owner, emojiAllowed, columns) {
+    this.socket.emit('start', { title, votesAllowed, negativeVotesAllowed, owner, emojiAllowed, columns });
   }
 
   emit(action, data?) {

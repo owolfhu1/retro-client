@@ -104,23 +104,31 @@ export class AppComponent {
 
     csv.push('TYPE,STATEMENT,UP VOTES,DOWN VOTES,EMOJI');
 
-    const goods = [['Went Well']];
-    instance.goods.forEach(good => {
-      makeRow(good, goods, '');
+    instance.columns.forEach(col => {
+      const items = [[col.text]];
+      col.items.forEach(item => {
+        makeRow(item, items, '');
+      });
+      csv.push(items.join('\r\n'));
     });
-    csv.push(goods.join('\r\n'));
 
-    const bads = [['Not Well']];
-    instance.bads.forEach(bad => {
-      makeRow(bad, bads, '');
-    });
-    csv.push(bads.join('\r\n'));
-
-    const actions = [['Action Items']];
-    instance.actions.forEach(action => {
-      makeRow(action, actions, '');
-    });
-    csv.push(actions.join('\r\n'));
+    // const goods = [['Went Well']];
+    // instance.goods.forEach(good => {
+    //   makeRow(good, goods, '');
+    // });
+    // csv.push(goods.join('\r\n'));
+    //
+    // const bads = [['Not Well']];
+    // instance.bads.forEach(bad => {
+    //   makeRow(bad, bads, '');
+    // });
+    // csv.push(bads.join('\r\n'));
+    //
+    // const actions = [['Action Items']];
+    // instance.actions.forEach(action => {
+    //   makeRow(action, actions, '');
+    // });
+    // csv.push(actions.join('\r\n'));
 
     const junks = [['Trash']];
     instance.trash.forEach(rubbage => {

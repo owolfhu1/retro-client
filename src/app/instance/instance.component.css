@@ -6,7 +6,7 @@
 }
 
 .section {
-  width: 30%;
+  width: 100%;
   margin: 10px;
   position: relative;
   display: flex;
@@ -23,9 +23,18 @@
   padding: 35px 5px 30px 5px
 }
 
+.min-trash {
+  width: 20px;
+  height: 0;
+  z-index: 100;
+  position: fixed;
+  bottom: 178px;
+  right: 83px;
+}
+
 .trash-handle {
   position: absolute;
-  top: 3px;
+  top: 4px;
   right:3px;
 }
 
@@ -35,6 +44,17 @@
   justify-content: flex-end;
   height: 100%;
   padding-top: 20px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .section-body {
@@ -72,11 +92,17 @@
   font-size: larger;
 }
 
-.left-corner-button {
+.trash-all-button {
   position: absolute;
   top: 5px;
-  left: 5px;
+  left: 23px;
   color: red;
+}
+
+.resize-button {
+  position: absolute;
+  top: 4px;
+  left: 3px;
 }
 
 mat-card {
@@ -85,30 +111,6 @@ mat-card {
 
 .cdk-drag-placeholder {
   opacity: 0;
-}
-
-#goods-color {
-  background: lightgreen;
-}
-
-#bads-color {
-  background: lightcoral;
-}
-
-#actions-color {
-  background: orange;
-}
-
-.action {
-  background: orangered;
-}
-
-.good {
-  background: green;
-}
-
-.bad {
-  background: darkred;
 }
 
 .login-wrapper {
