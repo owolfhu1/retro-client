@@ -25,22 +25,39 @@ export class CreateComponent implements OnInit {
 @Component({
   selector: 'icon-picker',
   template: `
-    <mat-form-field>
-      <mat-label>icon select</mat-label>
-      <mat-select [formControl]="iconCtrl" >
-        <mat-option>
-          <ngx-mat-select-search [formControl]="iconFilterCtrl" placeholderLabel="icon filter"></ngx-mat-select-search>
-        </mat-option>
+    <div class="icon-select-wrapper">
+      <mat-form-field color="accent" class="full" appearance="outline">
+        <mat-label>icon select</mat-label>
+        <mat-select [formControl]="iconCtrl" >
+          <mat-option>
+            <ngx-mat-select-search [formControl]="iconFilterCtrl" placeholderLabel="icon filter"></ngx-mat-select-search>
+          </mat-option>
 
-        <mat-option *ngFor="let iconString of filteredIconStrings | async" [value]="iconString">
-            <mat-icon>{{ iconString }}</mat-icon>{{ iconString }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p [style.text-align]="'center'"><button color="primary" mat-raised-button (click)="allIcons()">full list of icons</button></p>
-    <p [style.text-align]="'center'"><button color="accent" mat-raised-button (click)="random()">randomize</button></p>
-    <p [style.text-align]="'center'"><button color="warn" mat-raised-button (click)="dialogRef.close()">clear</button></p>
+          <mat-option *ngFor="let iconString of filteredIconStrings | async" [value]="iconString">
+              <mat-icon>{{ iconString }}</mat-icon>{{ iconString }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="full" color="accent" mat-stroked-button (click)="allIcons()">see all icons</button>
+      <button class="full" color="warn" mat-stroked-button (click)="dialogRef.close()">clear</button>
+    </div>
   `,
+  styles: [`
+    .full { width: 100%; }
+    button {
+        margin-bottom: 4px;
+    }
+    .icon-select-wrapper::ng-deep.mat-form-field-wrapper {
+      padding: 0;
+    }
+    .icon-select-wrapper::ng-deep.mat-form-field-infix {
+        border-top: 0;
+        padding-bottom: 3px;
+    }
+    .icon-select-wrapper::ng-deep.mat-form-field {
+        line-height: 1.4;
+    }
+  `],
 })
 export class IconPickerDialogComponent implements OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -63,10 +80,6 @@ export class IconPickerDialogComponent implements OnDestroy {
         this.dialogRef.close(value);
       }
     });
-  }
-
-  random() {
-    this.dialogRef.close(ICON_STRINGS[Math.floor(Math.random() * ICON_STRINGS.length)]);
   }
 
   allIcons() {
@@ -130,9 +143,10 @@ export class CreateDialogComponent implements OnDestroy {
   ];
 
   setIcon(index) {
-    this.dialog.open(IconPickerDialogComponent).afterClosed().pipe(takeUntil(this.destroy$)).subscribe(icon => {
-      this.columns[index].icon = icon;
-    });
+    this.dialog.open(IconPickerDialogComponent, { width: '180px' }).afterClosed()
+      .pipe(takeUntil(this.destroy$)).subscribe(icon => {
+        this.columns[index].icon = icon;
+      });
   }
 
   copy() {

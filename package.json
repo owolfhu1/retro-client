@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --live-reload=false",
+    "prod": "ng build --prod --output-path docs --base-href /retro-client/",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
