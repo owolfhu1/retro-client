@@ -135,6 +135,12 @@ export class CreateDialogComponent implements OnDestroy {
     });
   }
 
+  copy() {
+    navigator.clipboard.writeText(this.url).then(res => {
+      alert(this.url + ' copied');
+    });
+  }
+
   border(main) {
     switch (main) {
       case 'green' : return 'lightgreen';
@@ -161,8 +167,8 @@ export class CreateDialogComponent implements OnDestroy {
   }
 
   start() {
-    const title = (this.title || '').replace(' ', '').replace('?', '').replace('/', '').replace('=', '');
-    const owner = (this.owner || '').replace(' ', '');
+    const title = (this.title || '').replaceAll(' ', '').replaceAll('?', '').replaceAll('/', '').replaceAll('=', '');
+    const owner = (this.owner || '').replaceAll(' ', '');
 
     Array.from(document.getElementsByClassName('col-input'))
       .forEach((input, index) => this.columns[index].text = input['value']);
@@ -178,7 +184,7 @@ export class CreateDialogComponent implements OnDestroy {
   }
 
   get url(): string {
-    const title = (this.title || '').replace(' ', '').replace('?', '').replace('/', '').replace('=', '');
+    const title = (this.title || '').replaceAll(' ', '').replaceAll('?', '').replaceAll('/', '').replaceAll('=', '');
     const prefix = window.location.href.replace('create', 'instance/');
     return prefix + title;
   }

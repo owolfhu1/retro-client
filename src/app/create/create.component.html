@@ -66,8 +66,8 @@
 <hr>
 
 <div class="columns">
-  <pre *ngIf="title" matTooltip="instance url - click to copy">{{ url }}</pre>
-  <div *ngIf="!title"></div>
+
+  <div matTooltip="instance url - click to copy" (click)="copy()"><input id="url" disabled *ngIf="title" [value]="url"></div>
 
   <button mat-raised-button color="primary" (click)="start()">create</button>
 </div>

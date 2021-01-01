@@ -33,8 +33,8 @@ import { PdfPrinterComponent } from './pdf-printer.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
-const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-// const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [

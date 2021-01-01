@@ -32,18 +32,18 @@ cdk-virtual-scroll-viewport::ng-deep.mat-form-field-wrapper {
   padding-bottom: 0;
 }
 
-pre {
+#url {
   border: gray solid 2px;
   background: darkgrey;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
   color: #303030;
-  user-select: all;
   margin: 0;
+  width: 400px;
 }
 
-pre:hover {
+#url:hover {
   border: #373737 solid 2px;
   color: #111111;
   background: #c2c2c2;
