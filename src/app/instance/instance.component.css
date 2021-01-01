@@ -121,3 +121,8 @@ mat-card {
 .login {
   padding: 60px;
 }
+
+.col-icon {
+  transform: scale(1.6);
+  margin-right: 15px;
+}

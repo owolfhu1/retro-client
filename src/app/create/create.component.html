@@ -1,4 +1,5 @@
-<h3>Start a New Instance</h3>
+<h1 style="text-align: center">New Instance Creator</h1>
+<hr>
 
 <mat-form-field color="accent">
   <input matInput placeholder="instance title" [(ngModel)]="title">
@@ -17,13 +18,13 @@
 <mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
 
 <div class="columns">
-  <h4>Columns</h4>
+  <h3>Columns</h3>
 
   <button
     matTooltip="Add Column"
     mat-icon-button
     [disabled]="columns.length > 4"
-    (click)="columns.push({ color: 'green', text: '' })"
+    (click)="columns.push({ color: 'gray', text: '', icon: null })"
     class="corner-button">
     <mat-icon>add</mat-icon>
   </button>
@@ -34,24 +35,39 @@
   [cdkDropListData]="columns"
   (cdkDropListDropped)="drop($event)"
   itemSize="1"
-  [style.height]="(102 * columns.length) + 'px'"
+  [style.height]="(72 * columns.length) + 'px'"
 >
   <mat-form-field color="accent" appearance="outline" *ngFor="let column of columns; let i = index" cdkDrag>
     <input [style.border]="border(column.color) + ' solid 4px'" [style.background]="column.color" class="col-input" matInput [(ngModel)]="column.text">
 
-    <button matPrefix mat-icon-button [matMenuTriggerFor]="menu" matTooltip="pick a color">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button (click)="setColor(color, i)" mat-menu-item *ngFor="let color of colors" [style.background]="color">{{ color }}</button>
-    </mat-menu>
+    <div matPrefix class="options-wrapper">
+      <button mat-icon-button matTooltip="delete column" [disabled]="columns.length < 2" (click)="del(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
 
-    <button [style.margin-left]="'15px'" mat-icon-button matSuffix matTooltip="delete column" [disabled]="columns.length < 2" (click)="del(i)">
-      <mat-icon>remove</mat-icon>
-    </button>
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="pick a color">
+          <mat-icon>colorize</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="setColor(color, i)" mat-menu-item *ngFor="let color of colors" [style.background]="color">{{ color }}</button>
+        </mat-menu>
+      </div>
+
+      <button mat-icon-button matTooltip="select an icon" (click)="setIcon(i)"><mat-icon>emoji_emotions</mat-icon></button>
+
+    </div>
+
+    <mat-icon *ngIf="column.icon" matSuffix [matTooltip]="'column icon: ' + column.icon">{{ column.icon }}</mat-icon>
+
   </mat-form-field>
 </cdk-virtual-scroll-viewport>
 
-<div class="right">
-  <button mat-raised-button color="primary" (click)="start()">start</button>
+<hr>
+
+<div class="columns">
+  <pre *ngIf="title" matTooltip="instance url - click to copy">{{ url }}</pre>
+  <div *ngIf="!title"></div>
+
+  <button mat-raised-button color="primary" (click)="start()">create</button>
 </div>

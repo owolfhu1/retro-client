@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, InfoDialogComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CreateComponent, CreateDialogComponent } from './create/create.component';
+import { CreateComponent, CreateDialogComponent, IconPickerDialogComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import {
   MatBadgeModule,
@@ -17,11 +17,11 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule,
+  MatMenuModule, MatSelectModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { InstanceComponent, WriteDialogComponent } from './instance/instance.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -30,10 +30,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PdfPrinterComponent } from './pdf-printer.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
-// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
+// const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     StatementComponent,
     EmojiDialogComponent,
     PdfPrinterComponent,
+    IconPickerDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,9 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     PickerModule,
     EmojiModule,
     MatMenuModule,
+    NgxMatSelectSearchModule,
+    MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [
   ],
@@ -81,6 +86,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     InfoDialogComponent,
     EmojiDialogComponent,
     PdfPrinterComponent,
+    IconPickerDialogComponent,
   ]
 })
 export class AppModule { }
