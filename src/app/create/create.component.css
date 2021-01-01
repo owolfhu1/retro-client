@@ -16,6 +16,7 @@ mat-form-field {
   padding: 3px 3px 3px 5px;
   border-radius: 10px;
   width: 290px;
+  text-align: center;
 }
 
 .options-wrapper {
