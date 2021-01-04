@@ -1,21 +1,25 @@
 <h1 style="text-align: center">New Instance Creator</h1>
 <hr>
 
-<mat-form-field color="accent">
+<mat-form-field class="full" color="accent">
   <input matInput placeholder="instance title" [(ngModel)]="title">
 </mat-form-field>
 
-<mat-form-field color="accent">
+<mat-form-field class="full" color="accent">
   <input matInput placeholder="instance owner" [(ngModel)]="owner">
 </mat-form-field>
 
-<mat-form-field color="accent">
-  <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
-</mat-form-field>
+<div class="columns">
+  <mat-form-field class="small" color="accent">
+    <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
+  </mat-form-field>
 
-<mat-checkbox [(ngModel)]="negativeVotesAllowed">Negative Votes</mat-checkbox> &nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="negativeVotesAllowed">Negative Votes</mat-checkbox>
 
-<mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
+  <mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
+</div>
+
+
 
 <div class="columns">
   <h3>Columns</h3>
@@ -37,8 +41,14 @@
   itemSize="1"
   [style.height]="(72 * columns.length) + 'px'"
 >
-  <mat-form-field color="accent" appearance="outline" *ngFor="let column of columns; let i = index" cdkDrag>
-    <input [style.border]="border(column.color) + ' solid 4px'" [style.background]="column.color" class="col-input" matInput [(ngModel)]="column.text">
+  <mat-form-field class="full" color="accent" appearance="outline" *ngFor="let column of columns; let i = index" cdkDrag>
+    <input
+      [style.border]="border(column.color) + ' solid 4px'"
+      [style.background]="column.color"
+      class="col-input"
+      matInput
+      [placeholder]="'column ' + (i + 1)"
+      [(ngModel)]="column.text">
 
     <div matPrefix class="options-wrapper">
       <button mat-icon-button matTooltip="delete column" [disabled]="columns.length < 2" (click)="del(i)">
@@ -67,7 +77,9 @@
 
 <div class="columns">
 
-  <div matTooltip="instance url - click to copy" (click)="copy()"><input id="url" disabled *ngIf="title" [value]="url"></div>
+  <div matTooltip="instance url - click to copy" (click)="copy()">
+    <input id="url" disabled *ngIf="title" [value]="url">
+  </div>
 
   <button mat-raised-button color="primary" (click)="start()">create</button>
 </div>

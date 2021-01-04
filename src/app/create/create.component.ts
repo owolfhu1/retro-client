@@ -45,17 +45,17 @@ export class CreateComponent implements OnInit {
   styles: [`
     .full { width: 100%; }
     button {
-        margin-bottom: 4px;
+      margin-bottom: 4px;
     }
     .icon-select-wrapper::ng-deep.mat-form-field-wrapper {
       padding: 0;
     }
     .icon-select-wrapper::ng-deep.mat-form-field-infix {
-        border-top: 0;
-        padding-bottom: 3px;
+      border-top: 0;
+      padding-bottom: 3px;
     }
     .icon-select-wrapper::ng-deep.mat-form-field {
-        line-height: 1.4;
+      line-height: 1.4;
     }
   `],
 })
