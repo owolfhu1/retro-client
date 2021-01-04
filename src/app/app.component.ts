@@ -111,7 +111,8 @@ export class AppComponent {
   }
 
   newInstance() {
-    window.location.href = window.location.href.replace(window.location.pathname, '/create');
+    const prod = window.location.href.indexOf('/retro-server/') > -1;
+    window.location.href = window.location.href.replace(window.location.pathname, prod ? 'retro-client/create' : '/create');
   }
 
   downloadCSV() {
