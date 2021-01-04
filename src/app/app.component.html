@@ -15,12 +15,29 @@
           {{ socketService.votesLeft }}
         </mat-chip>
 
-        <mat-chip *ngFor="let user of socketService.instance.users">
+        <mat-chip
+          [id]="user"
+          style="overflow: visible"
+          *ngFor="let user of socketService.instance.users"
+          (click)="chat(user)"
+          [matTooltip]="chipToolTip(user)">
           <mat-icon matTooltip="self" *ngIf="socketService.name === user">account_circle</mat-icon>
           <mat-icon matTooltip="instance owner" *ngIf="socketService.instance.owner === user">gavel</mat-icon>
-          {{ user }}
+          <span matBadgeColor="warn" matBadgeSize="large" [matBadge]="unreadMessages[user]">{{ user }}</span>
         </mat-chip>
 
+        <span *ngFor="let user of socketService.offlineUsers">
+          <mat-chip
+            *ngIf="socketService.conversations[user]"
+            [id]="user"
+            style="overflow: visible"
+            (click)="chat(user)"
+            disabled
+            [matTooltip]="user + ' is offline'">
+            <mat-icon matTooltip="offline">cloud_off</mat-icon>
+            <span matBadgeColor="warn" matBadgeSize="large" [matBadge]="unreadMessages[user]">{{ user }}</span>
+          </mat-chip>
+        </span>
       </mat-chip-list>
 
       <h2 *ngIf="!socketService.instance">{{ introMessage }}</h2>

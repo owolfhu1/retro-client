@@ -2,10 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent, InfoDialogComponent } from './app.component';
+import { AppComponent, InfoDialogComponent, ChatDialogComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateComponent, CreateDialogComponent, IconPickerDialogComponent } from './create/create.component';
-import { HomeComponent } from './home/home.component';
 import {
   MatBadgeModule,
   MatButtonModule,
@@ -17,7 +16,8 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatSelectModule,
+  MatMenuModule,
+  MatSelectModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -40,7 +40,6 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
   declarations: [
     AppComponent,
     CreateComponent,
-    HomeComponent,
     CreateDialogComponent,
     InstanceComponent,
     WriteDialogComponent,
@@ -49,6 +48,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     EmojiDialogComponent,
     PdfPrinterComponent,
     IconPickerDialogComponent,
+    ChatDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +87,7 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     EmojiDialogComponent,
     PdfPrinterComponent,
     IconPickerDialogComponent,
+    ChatDialogComponent,
   ]
 })
 export class AppModule { }
