@@ -10,6 +10,7 @@ import {WriteDialogComponent} from '../instance/instance.component';
 })
 export class StatementComponent {
   @Input() statement;
+  @Input() type;
   @Output() trashStatement: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
@@ -40,21 +41,23 @@ export class StatementComponent {
   }
 
   edit() {
-    this.dialog.open(WriteDialogComponent, { width: '300px', data: this.statement.text })
-      .afterClosed().subscribe(text => {
-        if (text) {
-          this.socketService.emit('edit', { statementId: this.statement.id, text });
-        }
-      });
+    this.dialog.open(WriteDialogComponent, { width: '600px', data: {
+      text: this.statement.text, anonymous: !this.statement.notAnonymous, what: 'statement', author: this.statement.author, type: this.type
+    }}).afterClosed().subscribe(data => {
+      if (data) {
+        this.socketService.emit('edit', { statementId: this.statement.id, text: data.text, anonymous: data.anonymous });
+      }
+    });
   }
 
-  editComment(commentId, data) {
-    this.dialog.open(WriteDialogComponent, { width: '300px', data })
-      .afterClosed().subscribe(text => {
-        if (text) {
-          this.socketService.emit('edit-comment', { statementId: this.statement.id, commentId, text });
-        }
-      });
+  editComment(commentId, text, notAnonymous, author) {
+    this.dialog.open(WriteDialogComponent, { width: '600px', data: {
+      text, anonymous: !notAnonymous, what: 'comment', author,
+    }}).afterClosed().subscribe(data => {
+      if (data) {
+        this.socketService.emit('edit-comment', { statementId: this.statement.id, commentId, text: data.text, anonymous: data.anonymous });
+      }
+    });
   }
 
   deleteComment(commentId) {
@@ -62,12 +65,13 @@ export class StatementComponent {
   }
 
   comment() {
-    this.dialog.open(WriteDialogComponent, { width: '300px' })
-      .afterClosed().subscribe(text => {
-        if (text) {
-          this.socketService.emit('comment', { statementId: this.statement.id, text });
-        }
-      });
+    this.dialog.open(WriteDialogComponent, { width: '600px', data: {
+      anonymous: true, what: 'comment',
+    }}).afterClosed().subscribe(data => {
+      if (data) {
+        this.socketService.emit('comment', { statementId: this.statement.id, text: data.text, anonymous: data.anonymous });
+      }
+    });
   }
 
   calcVotes(obj, type) {
