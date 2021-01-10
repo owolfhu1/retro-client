@@ -1,120 +1,40 @@
-<mat-icon *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
-<span *ngIf="statement.notAnonymous"><i>author: {{ statement.author }}</i></span>
-<p class="line-breaks">{{ statement.text }}</p>
-
-<button
-  [disabled]="!socketService.votesLeft || this.socketService.disabled"
-  mat-icon-button
-  matBadgePosition="before"
-  [matBadge]="calcVotes(statement, 'ups')"
-  *ngIf="!iVoted(statement, 'downs')"
-  (click)="vote('ups')">
-  <mat-icon>thumb_up</mat-icon>
-</button>
-<button
-  mat-icon-button
-  (click)="unVote('ups')"
-  [disabled]="socketService.disabled"
-  [matBadge]="calcVotes(statement, 'downs')"
-  *ngIf="iVoted(statement, 'ups')">
-  <mat-icon>redo</mat-icon>
-</button>
-
-<button
-  mat-icon-button
-  (click)="unVote('downs')"
-  [matBadge]="calcVotes(statement, 'ups')"
-  [disabled]="socketService.disabled"
-  *ngIf="iVoted(statement, 'downs')">
-  <mat-icon>undo</mat-icon>
-</button>
-<button
-  *ngIf="socketService.instance.negativeVotesAllowed && !iVoted(statement, 'ups')"
-  [disabled]="!socketService.votesLeft || this.socketService.disabled"
-  mat-icon-button
-  [matBadge]="calcVotes(statement, 'downs')"
-  (click)="vote('downs')">
-  <mat-icon>thumb_down</mat-icon>
-</button>
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-<button
-  mat-icon-button
-  matTooltip="add a comment"
-  [disabled]="socketService.disabled"
-  (click)="comment()">
-  <mat-icon>add_comment</mat-icon>
-</button>
-
-<button
-  mat-icon-button
-  [disabled]="!canEdit || socketService.disabled"
-  matTooltip="edit statement"
-  (click)="edit()">
-  <mat-icon>edit</mat-icon>
-</button>
-
-<button
-  mat-icon-button
-  *ngIf="socketService.instance.emojiAllowed"
-  [disabled]="socketService.disabled"
-  (click)="addEmoji()"
-  matTooltip="add an emoji reaction">
-  <mat-icon>emoji_emotions</mat-icon>
-</button>
-
-<mat-chip-list *ngIf="socketService.instance.emojiAllowed && statement.emoji?.length">
-  <mat-chip
-    style="overflow: visible"
-    [selected]="obj.names.includes(socketService.name)"
-    color="accent"
-    *ngFor="let obj of statement.emoji"
-    [matTooltip]="obj.names.join(', ')"
-    [matBadge]="obj.names.length === 1 ? null : obj.names.length"
-    (click)="emoji(obj.emoji)">
-    <ngx-emoji set="facebook" [emoji]="obj.emoji.colons" tooltip="true" size="30"></ngx-emoji>
-  </mat-chip>
-</mat-chip-list>
-
-<mat-card *ngFor="let comment of statement.comments; let i = index">
-  <mat-icon *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
-  <span *ngIf="comment.notAnonymous"><i>author: {{ comment.author }}</i></span>
-  <p class="line-breaks">{{ comment.text }}</p>
+<div *ngIf="!socketService.minimizedMap[statement.id]">
+  <mat-icon *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
+  <span>author: {{ statement.notAnonymous ? statement.author : 'Anonymous' }}</span>
+  <p class="line-breaks">{{ statement.text }}</p>
 
   <button
-    (click)="commentVote('ups', comment.id)"
-    [disabled]="!socketService.votesLeft || socketService.disabled"
+    [disabled]="!socketService.votesLeft || this.socketService.disabled"
     mat-icon-button
     matBadgePosition="before"
-    *ngIf="!iVoted(comment, 'downs')"
-    [matBadge]="calcVotes(comment, 'ups')">
+    [matBadge]="calcVotes(statement, 'ups')"
+    *ngIf="!iVoted(statement, 'downs')"
+    (click)="vote('ups')">
     <mat-icon>thumb_up</mat-icon>
   </button>
   <button
     mat-icon-button
-    (click)="unCommentVote('ups', comment.id)"
+    (click)="unVote('ups')"
     [disabled]="socketService.disabled"
-    [matBadge]="calcVotes(comment, 'downs')"
-    *ngIf="iVoted(comment, 'ups')">
+    [matBadge]="calcVotes(statement, 'downs')"
+    *ngIf="iVoted(statement, 'ups')">
     <mat-icon>redo</mat-icon>
   </button>
 
   <button
     mat-icon-button
-    (click)="unCommentVote('downs', comment.id)"
+    (click)="unVote('downs')"
+    [matBadge]="calcVotes(statement, 'ups')"
     [disabled]="socketService.disabled"
-    [matBadge]="calcVotes(comment, 'ups')"
-    *ngIf="iVoted(comment, 'downs')">
+    *ngIf="iVoted(statement, 'downs')">
     <mat-icon>undo</mat-icon>
   </button>
   <button
-    *ngIf="socketService.instance.negativeVotesAllowed && !iVoted(comment, 'ups')"
-    (click)="commentVote('downs', comment.id)"
-    [disabled]="!socketService.votesLeft || socketService.disabled"
+    *ngIf="socketService.instance.negativeVotesAllowed && !iVoted(statement, 'ups')"
+    [disabled]="!socketService.votesLeft || this.socketService.disabled"
     mat-icon-button
-    [matBadge]="calcVotes(comment, 'downs')">
+    [matBadge]="calcVotes(statement, 'downs')"
+    (click)="vote('downs')">
     <mat-icon>thumb_down</mat-icon>
   </button>
 
@@ -122,9 +42,17 @@
 
   <button
     mat-icon-button
-    [disabled]="!canEditComment(i) || socketService.disabled"
-    (click)="editComment(comment.id, comment.text, comment.notAnonymous, comment.author)"
-    matTooltip="edit comment">
+    matTooltip="add a comment"
+    [disabled]="socketService.disabled"
+    (click)="comment()">
+    <mat-icon>add_comment</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    [disabled]="!canEdit || socketService.disabled"
+    matTooltip="edit statement"
+    (click)="edit()">
     <mat-icon>edit</mat-icon>
   </button>
 
@@ -132,41 +60,137 @@
     mat-icon-button
     *ngIf="socketService.instance.emojiAllowed"
     [disabled]="socketService.disabled"
-    (click)="addCommentEmoji(comment.id)"
+    (click)="addEmoji()"
     matTooltip="add an emoji reaction">
     <mat-icon>emoji_emotions</mat-icon>
   </button>
 
   <button
     mat-icon-button
-    [disabled]="!canEditComment(i) || socketService.disabled"
-    color="warn"
-    (click)="deleteComment(comment.id)"
-    matTooltip="delete comment">
-    <mat-icon>delete</mat-icon>
+    *ngIf="statement.comments.length"
+    [matBadge]="socketService.minimizeCommentsMap[statement.id] ? statement.comments.length : null"
+    [disabled]="socketService.disabled"
+    (click)="socketService.minimizeComments(statement.id)"
+    [matTooltip]="(socketService.minimizeCommentsMap[statement.id] ? 'show' : 'hide') + ' comments'">
+    <mat-icon>speaker_notes{{ socketService.minimizeCommentsMap[statement.id] ? '' : '_off'}}</mat-icon>
   </button>
 
-  <mat-chip-list *ngIf="socketService.instance.emojiAllowed && comment.emoji?.length">
+  <mat-chip-list *ngIf="socketService.instance.emojiAllowed && statement.emoji?.length">
     <mat-chip
       style="overflow: visible"
       [selected]="obj.names.includes(socketService.name)"
       color="accent"
-      *ngFor="let obj of comment.emoji"
+      *ngFor="let obj of statement.emoji"
       [matTooltip]="obj.names.join(', ')"
       [matBadge]="obj.names.length === 1 ? null : obj.names.length"
-      (click)="commentEmoji(comment.id, obj.emoji)">
+      (click)="emoji(obj.emoji)">
       <ngx-emoji set="facebook" [emoji]="obj.emoji.colons" tooltip="true" size="30"></ngx-emoji>
     </mat-chip>
   </mat-chip-list>
-</mat-card>
+
+  <div *ngIf="!socketService.minimizeCommentsMap[statement.id]">
+    <mat-card *ngFor="let comment of statement.comments; let i = index">
+      <mat-icon *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
+      <span>author: {{ comment.notAnonymous ? comment.author : 'Anonymous' }}</span>
+      <p class="line-breaks">{{ comment.text }}</p>
+
+      <button
+        (click)="commentVote('ups', comment.id)"
+        [disabled]="!socketService.votesLeft || socketService.disabled"
+        mat-icon-button
+        matBadgePosition="before"
+        *ngIf="!iVoted(comment, 'downs')"
+        [matBadge]="calcVotes(comment, 'ups')">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="unCommentVote('ups', comment.id)"
+        [disabled]="socketService.disabled"
+        [matBadge]="calcVotes(comment, 'downs')"
+        *ngIf="iVoted(comment, 'ups')">
+        <mat-icon>redo</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        (click)="unCommentVote('downs', comment.id)"
+        [disabled]="socketService.disabled"
+        [matBadge]="calcVotes(comment, 'ups')"
+        *ngIf="iVoted(comment, 'downs')">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button
+        *ngIf="socketService.instance.negativeVotesAllowed && !iVoted(comment, 'ups')"
+        (click)="commentVote('downs', comment.id)"
+        [disabled]="!socketService.votesLeft || socketService.disabled"
+        mat-icon-button
+        [matBadge]="calcVotes(comment, 'downs')">
+        <mat-icon>thumb_down</mat-icon>
+      </button>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <button
+        mat-icon-button
+        [disabled]="!canEditComment(i) || socketService.disabled"
+        (click)="editComment(comment.id, comment.text, comment.notAnonymous, comment.author)"
+        matTooltip="edit comment">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        *ngIf="socketService.instance.emojiAllowed"
+        [disabled]="socketService.disabled"
+        (click)="addCommentEmoji(comment.id)"
+        matTooltip="add an emoji reaction">
+        <mat-icon>emoji_emotions</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        [disabled]="!canEditComment(i) || socketService.disabled"
+        color="warn"
+        (click)="deleteComment(comment.id)"
+        matTooltip="delete comment">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-chip-list *ngIf="socketService.instance.emojiAllowed && comment.emoji?.length">
+        <mat-chip
+          style="overflow: visible"
+          [selected]="obj.names.includes(socketService.name)"
+          color="accent"
+          *ngFor="let obj of comment.emoji"
+          [matTooltip]="obj.names.join(', ')"
+          [matBadge]="obj.names.length === 1 ? null : obj.names.length"
+          (click)="commentEmoji(comment.id, obj.emoji)">
+          <ngx-emoji set="facebook" [emoji]="obj.emoji.colons" tooltip="true" size="30"></ngx-emoji>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-card>
+  </div>
+</div>
+
+<div *ngIf="socketService.minimizedMap[statement.id]">
+  <i [matTooltip]="statement.text">{{ minStatement() }}</i>
+</div>
 
 <button
   class="delete-button"
   mat-icon-button
+  color="warn"
   [disabled]="!canEdit || socketService.disabled"
   (click)="trashStatement.emit()"
   matTooltip="delete statement">
   <mat-icon>cancel</mat-icon>
 </button>
 
-
+<button
+  class="minimize-button"
+  mat-icon-button
+  (click)="socketService.minimize(statement.id)"
+  [matTooltip]="socketService.minimizedMap[statement.id] ? 'restore' : 'minimize'">
+  <mat-icon>{{ socketService.minimizedMap[statement.id] ? 'add' : 'remove' }}_circle</mat-icon>
+</button>

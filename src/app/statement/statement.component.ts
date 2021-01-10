@@ -74,6 +74,10 @@ export class StatementComponent {
     });
   }
 
+  minStatement() {
+    return this.statement.text.substring(0, 20);
+  }
+
   calcVotes(obj, type) {
     return  obj[type].length === 0 ? null :  obj[type].length + '';
   }

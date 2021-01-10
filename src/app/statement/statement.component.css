@@ -16,3 +16,9 @@ mat-card {
   top: 0;
   right: 0;
 }
+
+.minimize-button {
+  position: absolute;
+  top: 0;
+  right: 27px;
+}

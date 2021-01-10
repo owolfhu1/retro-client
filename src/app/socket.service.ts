@@ -24,6 +24,8 @@ export class SocketService {
   systemMessage: Subject<string> = new Subject();
   typingMap: { [name: string]: boolean } = {};
   conversations: Conversations = {};
+  minimizedMap: { [id: string]: boolean } = {};
+  minimizeCommentsMap: { [id: string]: boolean } = {};
 
   constructor(public socket: Socket) {
     socket.fromEvent<string>('console').subscribe(console.log);
@@ -60,6 +62,14 @@ export class SocketService {
 
   get offlineUsers() {
     return Object.keys(this.instance.votes).filter(user => this.instance.users.indexOf(user) < 0);
+  }
+
+  minimize(id) {
+    this.minimizedMap[id] = !this.minimizedMap[id];
+  }
+
+  minimizeComments(id) {
+    this.minimizeCommentsMap[id] = !this.minimizeCommentsMap[id];
   }
 
   startTyping(to) {
