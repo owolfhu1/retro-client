@@ -32,7 +32,7 @@ export class AppComponent {
         },
         width: '600px',
       }).afterClosed().subscribe(() => {
-        document.location.reload();
+        this.newInstance();
       });
     });
     socketService.socket.fromEvent<Message>('chat').subscribe(message => {
@@ -184,18 +184,23 @@ export class AppComponent {
 @Component({
   selector: 'info-dialog',
   template: `
-    <h3>{{ title }}</h3>
+    <h2 class="header">{{ title }}</h2>
     <p>{{ content }}</p>
     <div class="right-buttons">
-      <button mat-fab color="warn" *ngIf="cancelable" (click)="close()">
+      <button mat-mini-fab color="warn" *ngIf="cancelable" (click)="close()">
         <mat-icon>clear</mat-icon>
       </button>
       &nbsp;&nbsp;
-      <button mat-fab color="primary" (click)="close(true)">
+      <button mat-mini-fab color="primary" (click)="close(true)">
         <mat-icon>check</mat-icon>
       </button>
     </div>
   `,
+  styles: [`
+    .header {
+      margin-top: 0;
+    }
+  `]
 })
 export class InfoDialogComponent {
   title: string;
@@ -238,7 +243,7 @@ export class InfoDialogComponent {
         </button>
       </mat-form-field>
     </span>
-    <button class="close" mat-icon-button (click)="dialogRef.close()"><mat-icon>remove_circle</mat-icon></button>
+    <button class="close" color="warn" mat-icon-button (click)="dialogRef.close()"><mat-icon>remove_circle</mat-icon></button>
   `,
   styles: [`
     :host {

@@ -5,9 +5,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background:
 .right {
   text-align: right;
 }
-.center {
-  text-align: center;
-}
 
 app-instance {
   flex-grow: 1;

@@ -32,6 +32,7 @@
       <mat-card [style.background]="column.color" *ngFor="let statement of column.items; let i = index" cdkDrag>
         <app-statement
           [statement]="statement"
+          [type]="column.text"
           (trashStatement)="trash({ lastIndex: i, lastList: colIndex, manual: true })">
         </app-statement>
       </mat-card>
@@ -39,9 +40,10 @@
 
     <button
       matTooltip="write statement"
-      mat-fab
+      mat-mini-fab
       class="corner-button"
       color="accent"
+      [style.background]="column.color"
       [disabled]="socketService.disabled"
       (click)="write(column.text)">
       <mat-icon>create</mat-icon>

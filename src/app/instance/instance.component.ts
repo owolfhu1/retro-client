@@ -1,9 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {SocketService} from '../socket.service';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {debug} from 'util';
+import { Component, Inject, OnInit } from '@angular/core';
+import { SocketService } from '../socket.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-instance',
@@ -84,7 +83,7 @@ export class InstanceComponent implements OnInit {
   }
 
   trashColor(junk) {
-    return this.socketService.instance.columns[junk.from].color;
+    return (this.socketService.instance.columns[junk.from] || {}).color;
   }
 
   canDelete(index): boolean {
@@ -119,11 +118,12 @@ export class InstanceComponent implements OnInit {
   }
 
   write(type) {
-    this.dialog.open(WriteDialogComponent, { width: '300px' })
-      .afterClosed().subscribe(value => {
-        if (value) {
-          this.socketService.emit('new-statement', { type, value });
-        }
+    this.dialog.open(WriteDialogComponent, { width: '600px', panelClass: 'panel', data: {
+      type, anonymous: true, what: 'statement',
+    }}).afterClosed().subscribe(value => {
+      if (value) {
+        this.socketService.emit('new-statement', { type, value: value.text, anonymous: value.anonymous });
+      }
     });
   }
 
@@ -149,42 +149,70 @@ export class InstanceComponent implements OnInit {
 @Component({
   selector: 'write-dialog',
   template: `
-      <mat-form-field style="width: 100%">
-          <textarea matInput [(ngModel)]="text"></textarea>
-      </mat-form-field>
-      <div class="right-buttons">
-        <button mat-fab color="primary" (click)="close(text)">
-            <mat-icon *ngIf="!isEdit">add</mat-icon>
-            <mat-icon *ngIf="isEdit">done</mat-icon>
+    <h2>
+      {{ isEdit ? 'Editing' : 'Creating' }} {{ what }}
+      <span *ngIf="what === 'statement'">in {{ type }} column</span>
+    </h2>
+    <mat-form-field color="accent" appearance="outline" style="width: 100%">
+      <textarea rows="10" matInput [(ngModel)]="text"></textarea>
+    </mat-form-field>
+
+    <div class="flex">
+      <mat-checkbox [disabled]="isEdit && socketService.name !== author" [(ngModel)]="anonymous">Anonymous</mat-checkbox>
+
+      <div>
+        <button mat-mini-fab color="warn" (click)="dialogRef.close()">
+          <mat-icon>clear</mat-icon>
         </button>
-        &nbsp;&nbsp;
-        <button mat-fab color="warn" (click)="dialogRef.close()">
-            <mat-icon>clear</mat-icon>
+        &nbsp;
+        <button [disabled]="!text" mat-mini-fab color="primary" (click)="close()">
+          <mat-icon *ngIf="!isEdit">add</mat-icon>
+          <mat-icon *ngIf="isEdit">done</mat-icon>
         </button>
       </div>
+    </div>
   `,
+  styles: [`
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  `]
 })
 export class WriteDialogComponent {
   text: string;
   isEdit: boolean;
+  anonymous: boolean;
+  type: string;
+  what: string;
+  author: string;
+
   constructor(
     public socketService: SocketService,
     public dialogRef: MatDialogRef<WriteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.text = data;
-    this.isEdit = !!data;
+    this.text = data.text;
+    this.isEdit = !!data.text;
+    this.type = data.type;
+    this.anonymous = data.anonymous;
+    this.what = data.what;
+    this.author = data.author;
   }
-  close(text) {
+
+  close() {
     if (this.socketService.instance.locked && this.socketService.instance.owner !== this.socketService.name) {
       this.socketService.systemMessage.next('You can not do that, the instance has been locked.');
       this.dialogRef.close();
     } else {
-      this.dialogRef.close(text);
+      this.dialogRef.close({ text: this.text, anonymous: this.anonymous });
     }
-  };
+  }
 }
-
 
 export interface Instance {
   goods: Statement[];

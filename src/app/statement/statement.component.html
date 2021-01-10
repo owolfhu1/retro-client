@@ -1,7 +1,6 @@
 <mat-icon *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
-
-<h2 class="line-breaks">{{ statement.text }}</h2>
-
+<span *ngIf="statement.notAnonymous"><i>author: {{ statement.author }}</i></span>
+<p class="line-breaks">{{ statement.text }}</p>
 
 <button
   [disabled]="!socketService.votesLeft || this.socketService.disabled"
@@ -81,8 +80,8 @@
 
 <mat-card *ngFor="let comment of statement.comments; let i = index">
   <mat-icon *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
-
-  <h3 class="line-breaks">{{ comment.text }}</h3>
+  <span *ngIf="comment.notAnonymous"><i>author: {{ comment.author }}</i></span>
+  <p class="line-breaks">{{ comment.text }}</p>
 
   <button
     (click)="commentVote('ups', comment.id)"
@@ -124,7 +123,7 @@
   <button
     mat-icon-button
     [disabled]="!canEditComment(i) || socketService.disabled"
-    (click)="editComment(comment.id, comment.text)"
+    (click)="editComment(comment.id, comment.text, comment.notAnonymous, comment.author)"
     matTooltip="edit comment">
     <mat-icon>edit</mat-icon>
   </button>
