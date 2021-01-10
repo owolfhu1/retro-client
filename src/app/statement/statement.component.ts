@@ -74,8 +74,8 @@ export class StatementComponent {
     });
   }
 
-  minStatement() {
-    return this.statement.text.substring(0, 20);
+  minStatement(text) {
+    return text.substring(0, 20);
   }
 
   calcVotes(obj, type) {

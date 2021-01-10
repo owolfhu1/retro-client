@@ -153,19 +153,22 @@ export class InstanceComponent implements OnInit {
       {{ isEdit ? 'Editing' : 'Creating' }} {{ what }}
       <span *ngIf="what === 'statement'">in {{ type }} column</span>
     </h2>
-    <mat-form-field color="accent" appearance="outline" style="width: 100%">
-      <textarea rows="10" matInput [(ngModel)]="text"></textarea>
-    </mat-form-field>
+
+    <div class="editor-wrapper">
+      <mat-form-field color="accent" appearance="outline" style="width: 100%">
+        <textarea rows="10" matInput [(ngModel)]="text"></textarea>
+      </mat-form-field>
+    </div>
 
     <div class="flex">
       <mat-checkbox [disabled]="isEdit && socketService.name !== author" [(ngModel)]="anonymous">Anonymous</mat-checkbox>
 
       <div>
-        <button mat-mini-fab color="warn" (click)="dialogRef.close()">
+        <button mat-mini-fab color="warn" matTooltip="cancel" (click)="dialogRef.close()">
           <mat-icon>clear</mat-icon>
         </button>
         &nbsp;
-        <button [disabled]="!text" mat-mini-fab color="primary" (click)="close()">
+        <button [matTooltip]="isEdit ? 'update' : 'submit'" [disabled]="!text" mat-mini-fab color="primary" (click)="close()">
           <mat-icon *ngIf="!isEdit">add</mat-icon>
           <mat-icon *ngIf="isEdit">done</mat-icon>
         </button>
@@ -180,6 +183,9 @@ export class InstanceComponent implements OnInit {
     }
     h2 {
       margin-top: 0;
+    }
+    .editor-wrapper::ng-deep.mat-form-field-infix {
+      border-top: none;
     }
   `]
 })
