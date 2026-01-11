@@ -1,45 +1,45 @@
-<h1 style="text-align: center">New Instance Creator</h1>
-<hr>
+<div class="create-dialog-content">
+  <h1 style="text-align: center">New Instance Creator</h1>
+  <hr>
 
-<mat-form-field class="full" color="accent">
-  <input matInput placeholder="instance title" [(ngModel)]="title">
-</mat-form-field>
-
-<mat-form-field class="full" color="accent">
-  <input matInput placeholder="instance owner" [(ngModel)]="owner">
-</mat-form-field>
-
-<div class="columns">
-  <mat-form-field class="small" color="accent">
-    <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
+  <mat-form-field class="full" color="accent">
+    <input matInput placeholder="instance title" [(ngModel)]="title">
   </mat-form-field>
 
-  <mat-checkbox [(ngModel)]="negativeVotesAllowed">Negative Votes</mat-checkbox>
+  <mat-form-field class="full" color="accent">
+    <input matInput placeholder="instance owner" [(ngModel)]="owner">
+  </mat-form-field>
 
-  <mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
-</div>
+  <div>
+    <mat-form-field class="small" color="accent">
+      <input matInput type="number" placeholder="Votes Allowed" [(ngModel)]="likesAllowed">
+    </mat-form-field>
 
+    <mat-checkbox [(ngModel)]="negativeVotesAllowed">Negative Votes</mat-checkbox>
 
+    <mat-checkbox [(ngModel)]="emojiAllowed">Emoji Reactions</mat-checkbox>
+  </div>
 
-<div class="columns">
-  <h3>Columns</h3>
+  <div class="columns">
+    <h3>Columns</h3>
 
-  <button
-    matTooltip="Add Column"
-    mat-icon-button
-    [disabled]="columns.length > 4"
-    (click)="columns.push({ color: 'gray', text: '', icon: null })"
-    class="corner-button">
-    <mat-icon>add</mat-icon>
-  </button>
-</div>
+    <button
+      matTooltip="Add Column"
+      mat-icon-button
+      [disabled]="columns.length > 4"
+      (click)="columns.push({ color: 'gray', text: '', icon: null })"
+      class="corner-button">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 
 <cdk-virtual-scroll-viewport
+  class="columns-viewport"
   cdkDropList
   [cdkDropListData]="columns"
-  (cdkDropListDropped)="drop($event)"
-  itemSize="1"
-  [style.height]="(72 * columns.length) + 'px'"
+    (cdkDropListDropped)="drop($event)"
+    itemSize="1"
+  [style.height]="(90 * (columns.length > 3 ? 3 : columns.length)) + 'px'"
 >
   <mat-form-field class="full" color="accent" appearance="outline" *ngFor="let column of columns; let i = index" cdkDrag>
     <input
@@ -73,13 +73,14 @@
   </mat-form-field>
 </cdk-virtual-scroll-viewport>
 
-<hr>
+  <hr>
 
-<div class="columns">
+  <div class="columns">
 
-  <div matTooltip="instance url - click to copy" (click)="copy()">
-    <input id="url" disabled *ngIf="title" [value]="url">
+    <div matTooltip="instance url - click to copy" (click)="copy()">
+      <input id="url" disabled *ngIf="title" [value]="url">
+    </div>
+
+    <button mat-raised-button color="primary" (click)="start()">create</button>
   </div>
-
-  <button mat-raised-button color="primary" (click)="start()">create</button>
 </div>

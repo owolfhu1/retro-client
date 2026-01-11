@@ -10,6 +10,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Routes
+
+- `/create`: Create a new retro instance.
+- `/instance/:id`: Join an existing instance by id (for example, `/instance/demo`).
+- `*`: Any other route redirects to `/instance/demo`.
+
 ## Code scaffolding
 
 Run `yarn ng generate component component-name` to generate a new component. You can also use `yarn ng generate directive|pipe|service|class|guard|interface|enum|module`.
