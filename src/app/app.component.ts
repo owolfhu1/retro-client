@@ -1,6 +1,6 @@
-import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { Message, SocketService } from './socket.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PdfPrinterComponent } from './pdf-printer.component';
 
 @Component({

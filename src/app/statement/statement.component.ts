@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
-import {SocketService} from '../socket.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {WriteDialogComponent} from '../instance/instance.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SocketService } from '../socket.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { WriteDialogComponent } from '../instance/instance.component';
 
 @Component({
   selector: 'app-statement',

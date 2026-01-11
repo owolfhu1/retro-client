@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { Subject } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
+import { Observable, Subject } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Conversations {
   [name: string]: Message[];
@@ -9,6 +10,22 @@ export interface Conversations {
 export interface Message {
   name: string;
   message: string;
+}
+
+class SocketWrapper {
+  constructor(private socket: Socket) {}
+
+  fromEvent<T>(eventName: string): Observable<T> {
+    return new Observable<T>(subscriber => {
+      const handler = (data: T) => subscriber.next(data);
+      this.socket.on(eventName, handler);
+      return () => this.socket.off(eventName, handler);
+    });
+  }
+
+  emit(eventName: string, data?: unknown) {
+    this.socket.emit(eventName, data);
+  }
 }
 
 @Injectable({
@@ -20,17 +37,24 @@ export class SocketService {
   instance: any;
   lastAction: any;
   isBeingReset = false;
-  goToInstance = this.socket.fromEvent<{instance: any, name: string}>('goToInstance');
+  goToInstance: Observable<{instance: any, name: string}>;
   systemMessage: Subject<string> = new Subject();
   typingMap: { [name: string]: boolean } = {};
   conversations: Conversations = {};
   minimizedMap: { [id: string]: boolean } = {};
   minimizeCommentsMap: { [id: string]: boolean } = {};
 
-  constructor(public socket: Socket) {
-    socket.fromEvent<string>('console').subscribe(console.log);
-    socket.fromEvent<any>('instance').subscribe(instance => this.instance = instance);
-    socket.fromEvent<string>('set-name').subscribe(name => {
+  public socket: SocketWrapper;
+
+  constructor() {
+    const socketUrl = environment.socketUrl || window.location.origin;
+    const client = io(socketUrl);
+    this.socket = new SocketWrapper(client);
+    this.goToInstance = this.socket.fromEvent<{instance: any, name: string}>('goToInstance');
+
+    this.socket.fromEvent<string>('console').subscribe(console.log);
+    this.socket.fromEvent<any>('instance').subscribe(instance => this.instance = instance);
+    this.socket.fromEvent<string>('set-name').subscribe(name => {
       this.name = name;
       if (this.isBeingReset) {
         this.isBeingReset = false;
@@ -45,19 +69,19 @@ export class SocketService {
         }
       }
     });
-    socket.fromEvent<void>('reset').subscribe(_ => {
+    this.socket.fromEvent<void>('reset').subscribe(_ => {
       this.isBeingReset = true;
       this.socket.emit('join', { name: this.name, instanceId: this.instance.title });
     });
     setInterval(() => this.emit('ping', 'stay alive'), 60000);
-    socket.fromEvent<Message>('chat').subscribe((message: Message) => {
+    this.socket.fromEvent<Message>('chat').subscribe((message: Message) => {
       if (!this.conversations[message.name]) {
         this.conversations[message.name] = [];
       }
       this.conversations[message.name].unshift(message);
     });
-    socket.fromEvent<string>('typing-start').subscribe(name => this.typingMap[name] = true);
-    socket.fromEvent<string>('typing-stop').subscribe(name => this.typingMap[name] = false);
+    this.socket.fromEvent<string>('typing-start').subscribe(name => this.typingMap[name] = true);
+    this.socket.fromEvent<string>('typing-stop').subscribe(name => this.typingMap[name] = false);
   }
 
   get offlineUsers() {

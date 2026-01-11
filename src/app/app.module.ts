@@ -5,24 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, InfoDialogComponent, ChatDialogComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateComponent, CreateDialogComponent, IconPickerDialogComponent } from './create/create.component';
-import {
-  MatBadgeModule,
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatMenuModule,
-  MatSelectModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { InstanceComponent, WriteDialogComponent } from './instance/instance.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EmojiDialogComponent, StatementComponent } from './statement/statement.component';
@@ -31,10 +28,6 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PdfPrinterComponent } from './pdf-printer.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
-
-// const config: SocketIoConfig = { url: 'http://localhost:4242', options: {} };
-const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
@@ -61,7 +54,6 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
     MatInputModule,
     FormsModule,
     AppRoutingModule,
-    SocketIoModule.forRoot(config),
     MatCardModule,
     DragDropModule,
     MatChipsModule,
@@ -80,15 +72,6 @@ const config: SocketIoConfig = { url: 'https://retroserver.herokuapp.com/', opti
   providers: [
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    CreateDialogComponent,
-    WriteDialogComponent,
-    InfoDialogComponent,
-    EmojiDialogComponent,
-    PdfPrinterComponent,
-    IconPickerDialogComponent,
-    ChatDialogComponent,
-  ]
 })
 export class AppModule { }
 

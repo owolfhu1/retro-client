@@ -4,7 +4,7 @@
     <mat-toolbar-row>
 
       <!-- left menu: title | votes left | ...online users  -->
-      <mat-chip-list *ngIf="socketService.instance">
+      <mat-chip-set *ngIf="socketService.instance">
 
         <mat-chip color="primary" selected matTooltip="instance title"><h2>
           {{ socketService.instance.title }}
@@ -38,12 +38,12 @@
             <span matBadgeColor="warn" matBadgeSize="large" [matBadge]="unreadMessages[user]">{{ user }}</span>
           </mat-chip>
         </span>
-      </mat-chip-list>
+      </mat-chip-set>
 
       <h2 *ngIf="!socketService.instance">{{ introMessage }}</h2>
 
       <!-- right menu: download | lock | delete | create | about -->
-      <mat-chip-list>
+      <mat-chip-set>
 
         <mat-chip
           *ngIf="socketService.instance"
@@ -91,7 +91,7 @@
           <mat-icon matTooltip="about">new_releases</mat-icon>
         </mat-chip>
 
-      </mat-chip-list>
+      </mat-chip-set>
 
     </mat-toolbar-row>
   </mat-toolbar>

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SocketService } from './socket.service';
 import * as jsPDF from 'jspdf';
 
@@ -57,7 +57,7 @@ import * as jsPDF from 'jspdf';
   `,
 })
 export class PdfPrinterComponent implements OnInit {
-  @ViewChild('content', null) content: ElementRef;
+  @ViewChild('content', { static: false }) content: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<PdfPrinterComponent>,
     public socketService: SocketService,
