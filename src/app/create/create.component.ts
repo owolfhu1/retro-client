@@ -50,6 +50,7 @@ export class CreateComponent implements OnInit {
     .icon-select-header {
       margin: 0 0 8px;
       text-align: center;
+      color: ghostwhite;
     }
     button {
       margin-bottom: 4px;

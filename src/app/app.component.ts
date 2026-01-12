@@ -78,8 +78,9 @@ export class AppComponent {
   about() {
     this.dialog.open(InfoDialogComponent, {
       data: {
-        title: 'Retrospective Application created by Orion Wolf-Hubbard',
+        title: 'Created by Orion Wolf-Hubbard',
         content: 'Contact: owolfhu1@gmail.com',
+        content2: 'Github: https://github.com/owolfhu1',
       },
       width: '600px',
     });
@@ -184,27 +185,35 @@ export class AppComponent {
 @Component({
   selector: 'info-dialog',
   template: `
-    <h2 class="header">{{ title }}</h2>
-    <p>{{ content }}</p>
-    <div class="right-buttons">
-      <button mat-mini-fab color="warn" *ngIf="cancelable" (click)="close()">
-        <mat-icon>clear</mat-icon>
-      </button>
-      &nbsp;&nbsp;
-      <button mat-mini-fab color="primary" (click)="close(true)">
-        <mat-icon>check</mat-icon>
-      </button>
+    <div class="info-wrapper">
+      <h2 class="header">{{ title }}</h2>
+      <p>{{ content }}</p>
+      <p *ngIf="content2">{{ content2 }}</p>
+      <div class="right-buttons">
+        <button mat-mini-fab color="warn" *ngIf="cancelable" (click)="close()">
+          <mat-icon>clear</mat-icon>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-mini-fab color="primary" (click)="close(true)">
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
     </div>
   `,
   styles: [`
     .header {
       margin-top: 0;
     }
+    .info-wrapper {
+      padding: 1rem;
+      color: ghostwhite;
+    }
   `]
 })
 export class InfoDialogComponent {
   title: string;
   content: string;
+  content2: string;
   cancelable: boolean;
 
   constructor(
@@ -214,6 +223,7 @@ export class InfoDialogComponent {
   ) {
     this.title = data.title;
     this.content = data.content;
+    this.content2 = data.content2;
     this.cancelable = data.cancelable;
   }
 
