@@ -185,7 +185,7 @@ export class AppComponent {
 @Component({
   selector: 'info-dialog',
   template: `
-    <div class="info-wrapper">
+    <div class="info-wrap">
       <h2 class="header">{{ title }}</h2>
       <p>{{ content }}</p>
       <p *ngIf="content2">{{ content2 }}</p>
@@ -204,7 +204,7 @@ export class AppComponent {
     .header {
       margin-top: 0;
     }
-    .info-wrapper {
+    .info-wrap {
       padding: 1rem;
       color: ghostwhite;
     }
@@ -235,25 +235,26 @@ export class InfoDialogComponent {
 @Component({
   selector: 'chat-dialog',
   template: `
-    <h2 class="header">Private chat with {{ name }}</h2>
-    <mat-card class="body">
-      <i *ngIf="socketService.typingMap[name]">{{ name }} is typing...</i>
-
-      <mat-card
-        [ngClass]="{ incoming: message.name === name, outgoing: message.name !== name, message: true }"
-        *ngFor="let message of socketService.conversations[name]">
-          <b>{{ message.name }}</b>: {{ message.message }}
+    <div class="chat-wrapper">
+      <h2 class="header">Private chat with {{ name }}</h2>
+      <mat-card class="body">
+        <i *ngIf="socketService.typingMap[name]">{{ name }} is typing...</i>
+        <mat-card
+          [ngClass]="{ incoming: message.name === name, outgoing: message.name !== name, message: true }"
+          *ngFor="let message of socketService.conversations[name]">
+            {{ message.name }}: {{ message.message }}
+        </mat-card>
       </mat-card>
-    </mat-card>
-    <span class="input-wrapper">
-      <mat-form-field class="full" appearance="outline" color="accent">
-        <input (ngModelChange)="inputChanges($event)" autocomplete="off" class="full" matInput (keyup.enter)="send()" [(ngModel)]="input">
-        <button mat-icon-button color="accent" matTooltip="send message" [disabled]="!input" matSuffix (click)="send()">
-          <mat-icon>send</mat-icon>
-        </button>
-      </mat-form-field>
-    </span>
-    <button class="close" color="warn" mat-icon-button (click)="dialogRef.close()"><mat-icon>remove_circle</mat-icon></button>
+      <span class="input-wrapper">
+        <mat-form-field class="full" appearance="outline" color="accent">
+          <input (ngModelChange)="inputChanges($event)" autocomplete="off" class="full" matInput (keyup.enter)="send()" [(ngModel)]="input">
+          <button mat-icon-button color="accent" matTooltip="send message" [disabled]="!input" matSuffix (click)="send()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </span>
+      <button class="close" color="warn" mat-icon-button (click)="dialogRef.close()"><mat-icon>remove_circle</mat-icon></button>
+    </div>
   `,
   styles: [`
     :host {
@@ -274,11 +275,12 @@ export class InfoDialogComponent {
     }
     .header {
       margin-top: 0;
+      text-align: center;
     }
     .close {
       position: absolute;
-      top: -10px;
-      right: -5px;
+      top: 1px;
+      right: 1px;
     }
     .message {
       padding: 5px 10px;
@@ -295,16 +297,9 @@ export class InfoDialogComponent {
     .full {
       width: 100%;
     }
-    .input-wrapper::ng-deep.mat-form-field-wrapper {
-        padding: 0;
-    }
-    .input-wrapper::ng-deep.mat-form-field-infix {
-        border-top: 0;
-        padding-bottom: 3px;
-        padding-top: 0;
-    }
-    .input-wrapper::ng-deep.mat-form-field {
-        line-height: 2;
+    .chat-wrapper {
+      padding: 1rem 1rem 0 1rem;
+      color: ghostwhite;
     }
   `],
 })

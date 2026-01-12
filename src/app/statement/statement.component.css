@@ -22,3 +22,27 @@ mat-card {
   top: 0;
   right: 27px;
 }
+
+.statement-wrapper {
+  padding: .5rem;
+}
+
+.comment-wrapper {
+  padding: .5rem;
+}
+
+.flag {
+  position: absolute;
+  top: .5rem;
+  right: 4rem;
+}
+
+:host ::ng-deep .mat-mdc-icon-button .mat-mdc-button-touch-target {
+  height: 36px;
+  width: 36px;
+}
+
+:host ::ng-deep .mat-mdc-icon-button {
+  --mdc-icon-button-state-layer-size: 36px;
+  padding: 6px;
+}

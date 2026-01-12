@@ -1,15 +1,17 @@
 
 <div *ngIf="!socketService.name" class="login-wrapper">
   <mat-card class="login">
-
-    <p>Please enter a name to join instance "{{ title }}"</p>
-
     <mat-form-field>
-      <input matInput placeholder="name" (keyup.enter)="join()" [(ngModel)]="nameInput">
+      <input matInput placeholder="enter a name to join instance" (keyup.enter)="join()" [(ngModel)]="nameInput">
     </mat-form-field>
-    &nbsp;
-    <button mat-raised-button color="accent" (click)="join()">join</button>
 
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="join()"
+      [disabled]="!nameInput || !nameInput.trim()">
+      Join {{ title }}
+    </button>
   </mat-card>
 </div>
 

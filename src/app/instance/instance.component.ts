@@ -112,7 +112,7 @@ export class InstanceComponent implements OnInit {
   }
 
   join() {
-    const name = this.nameInput.replace(' ', '');
+    const name = (this.nameInput || '').trim();
     if (!name) { return; }
     this.socketService.emit('join', { instanceId: this.title, name });
   }
@@ -149,29 +149,29 @@ export class InstanceComponent implements OnInit {
 @Component({
   selector: 'write-dialog',
   template: `
-    <h2>
-      {{ isEdit ? 'Editing' : 'Creating' }} {{ what }}
-      <span *ngIf="what === 'statement'">in {{ type }} column</span>
-    </h2>
+    <div class="write-wrapper">
+      <h2 class="write-header">
+        {{ isEdit ? 'Editing' : 'Creating' }} {{ what }}
+        <span *ngIf="what === 'statement'">in {{ type }} column</span>
+      </h2>
 
-    <div class="editor-wrapper">
       <mat-form-field color="accent" appearance="outline" style="width: 100%">
         <textarea rows="10" matInput [(ngModel)]="text"></textarea>
       </mat-form-field>
-    </div>
 
-    <div class="flex">
-      <mat-checkbox [disabled]="isEdit && socketService.name !== author" [(ngModel)]="anonymous">Anonymous</mat-checkbox>
+      <div class="flex">
+        <mat-checkbox [disabled]="isEdit && socketService.name !== author" [(ngModel)]="anonymous">Anonymous</mat-checkbox>
 
-      <div>
-        <button mat-mini-fab color="warn" matTooltip="cancel" (click)="dialogRef.close()">
-          <mat-icon>clear</mat-icon>
-        </button>
-        &nbsp;
-        <button [matTooltip]="isEdit ? 'update' : 'submit'" [disabled]="!text" mat-mini-fab color="primary" (click)="close()">
-          <mat-icon *ngIf="!isEdit">add</mat-icon>
-          <mat-icon *ngIf="isEdit">done</mat-icon>
-        </button>
+        <div>
+          <button mat-mini-fab color="warn" matTooltip="cancel" (click)="dialogRef.close()">
+            <mat-icon>clear</mat-icon>
+          </button>
+          &nbsp;
+          <button [matTooltip]="isEdit ? 'update' : 'submit'" [disabled]="!text" mat-mini-fab color="primary" (click)="close()">
+            <mat-icon *ngIf="!isEdit">add</mat-icon>
+            <mat-icon *ngIf="isEdit">done</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   `,
@@ -184,8 +184,12 @@ export class InstanceComponent implements OnInit {
     h2 {
       margin-top: 0;
     }
-    .editor-wrapper::ng-deep.mat-form-field-infix {
-      border-top: none;
+    .write-wrapper {
+      padding: 1rem;
+      color: ghostwhite;
+    }
+    .write-header {
+      text-align: center;
     }
   `]
 })

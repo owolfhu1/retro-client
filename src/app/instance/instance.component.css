@@ -11,6 +11,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  padding: 0 .5rem .5rem .5rem;
+  color: ghostwhite;
 }
 
 .trash {
@@ -123,7 +125,8 @@ mat-card {
 }
 
 .login {
-  padding: 60px;
+  padding: 1rem;
+  color: ghostwhite;
 }
 
 .col-icon {

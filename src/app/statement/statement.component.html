@@ -1,5 +1,5 @@
-<div *ngIf="!socketService.minimizedMap[statement.id]">
-  <mat-icon *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
+<div class="statement-wrapper" *ngIf="!socketService.minimizedMap[statement.id]">
+  <mat-icon class="flag" *ngIf="statement.isEdited" matTooltip="statement has been edited">outlined_flag</mat-icon>
   <span>author: {{ statement.notAnonymous ? statement.author : 'Anonymous' }}</span>
   <p class="line-breaks">{{ statement.text }}</p>
 
@@ -90,8 +90,8 @@
 
   <div *ngIf="!socketService.minimizeCommentsMap[statement.id]">
     <mat-card *ngFor="let comment of statement.comments; let i = index">
-      <div *ngIf="!socketService.minimizedMap[comment.id]">
-        <mat-icon *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
+      <div class="comment-wrapper" *ngIf="!socketService.minimizedMap[comment.id]">
+        <mat-icon class="flag" *ngIf="comment.isEdited" matTooltip="comment has been edited">outlined_flag</mat-icon>
         <span>author: {{ comment.notAnonymous ? comment.author : 'Anonymous' }}</span>
         <p class="line-breaks">{{ comment.text }}</p>
 
@@ -172,7 +172,7 @@
         </mat-chip-list>
       </div>
 
-      <div *ngIf="socketService.minimizedMap[comment.id]">
+      <div style="padding: .5rem" *ngIf="socketService.minimizedMap[comment.id]">
         <i [matTooltip]="comment.text">{{ minStatement(comment.text) }}</i>
       </div>
 
@@ -187,7 +187,7 @@
   </div>
 </div>
 
-<div *ngIf="socketService.minimizedMap[statement.id]">
+<div style="padding: .5rem" *ngIf="socketService.minimizedMap[statement.id]">
   <i [matTooltip]="statement.text">{{ minStatement(statement.text) }}</i>
 </div>
 
