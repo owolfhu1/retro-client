@@ -24,6 +24,17 @@ Run `yarn ng generate component component-name` to generate a new component. You
 
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. Use `yarn prod` for a production build.
 
+## GitHub Pages deployment
+
+This repo is configured to serve the site from the `master` branch `docs/` folder.
+
+1) Build the production site:
+   - `yarn prod` (outputs to `docs/`)
+2) Commit and push the updated `docs/` folder.
+3) In GitHub repo settings, set Pages source to:
+   - Branch: `master`
+   - Folder: `/docs`
+
 ## Running unit tests
 
 Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
